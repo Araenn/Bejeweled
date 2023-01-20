@@ -146,18 +146,10 @@ void CBejeweledDoc::Dump(CDumpContext& dc) const
 void CBejeweledDoc::OnTestAffichagegrid()
 {
 	CBoard board(8);
-	// TODO: ajoutez ici le code de votre gestionnaire de commande
-	m_tailleTab = 8;
-	CString temp;
-
+	m_tailleTab = board.getBoardSize();
+	if (p_valueTab != NULL) delete[] p_valueTab;
 	p_valueTab = new CString[m_tailleTab];
-	for (int i = 0; i < m_tailleTab; i++) {
-		p_valueTab[i] = "[";
-		temp.Format(_T("%2i"), i);
-		for (int j = 0; j < m_tailleTab; j++) {
-			p_valueTab[i] = p_valueTab[i] + board.getGrid(i, j) + (CString)"]"; //ameliorer le debug avec [
-		}
-	}
+	p_valueTab = board.debug_board();
 	UpdateAllViews(0);
 }
 
