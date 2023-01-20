@@ -45,4 +45,10 @@ protected:
 	// Fonction d'assistance qui définit le contenu de recherche pour un gestionnaire de recherche
 	void SetSearchContent(const CString& value);
 #endif // SHARED_HANDLERS
+public:
+	afx_msg void OnTestAffichagegrid();
+	int m_tailleTab;
+	CString *p_valueTab;
+	CString *getChaine();
+	int getTaille();
 };

@@ -5,6 +5,8 @@
 
 #pragma once
 #include <vector>
+#include <string>
+#include <iostream>
 using namespace std;
 
 class CBoard
@@ -14,9 +16,8 @@ private:
 	int size_grid;
 
 public:
-	CBoard();
-	~CBoard();
 	CBoard(int size);
+	CString getGrid(int i, int j);
 };
 
 

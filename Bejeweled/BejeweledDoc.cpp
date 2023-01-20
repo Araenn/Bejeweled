@@ -11,6 +11,7 @@
 #endif
 
 #include "BejeweledDoc.h"
+#include "CBoard.h"
 
 #include <propkey.h>
 
@@ -23,12 +24,15 @@
 IMPLEMENT_DYNCREATE(CBejeweledDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CBejeweledDoc, CDocument)
+	ON_COMMAND(ID_TEST_AFFICHAGEGRID, &CBejeweledDoc::OnTestAffichagegrid)
 END_MESSAGE_MAP()
 
 
 // construction/destruction de CBejeweledDoc
 
-CBejeweledDoc::CBejeweledDoc() noexcept
+CBejeweledDoc::CBejeweledDoc() noexcept :
+	p_valueTab(NULL),
+	m_tailleTab(0)
 {
 	// TODO: ajoutez ici le code d'une construction unique
 
@@ -36,6 +40,7 @@ CBejeweledDoc::CBejeweledDoc() noexcept
 
 CBejeweledDoc::~CBejeweledDoc()
 {
+	if (p_valueTab != NULL) delete[] p_valueTab;
 }
 
 BOOL CBejeweledDoc::OnNewDocument()
@@ -136,3 +141,30 @@ void CBejeweledDoc::Dump(CDumpContext& dc) const
 
 
 // commandes de CBejeweledDoc
+
+
+void CBejeweledDoc::OnTestAffichagegrid()
+{
+	CBoard board(8);
+	// TODO: ajoutez ici le code de votre gestionnaire de commande
+	m_tailleTab = 8;
+	CString temp;
+
+	p_valueTab = new CString[m_tailleTab];
+	for (int i = 0; i < m_tailleTab; i++) {
+		p_valueTab[i] = "[";
+		temp.Format(_T("%2i"), i);
+		for (int j = 0; j < m_tailleTab; j++) {
+			p_valueTab[i] = p_valueTab[i] + board.getGrid(i, j) + (CString)"]"; //ameliorer le debug avec [
+		}
+	}
+	UpdateAllViews(0);
+}
+
+CString *CBejeweledDoc::getChaine() {
+	return this->p_valueTab;
+}
+
+int CBejeweledDoc::getTaille() {
+	return this->m_tailleTab;
+}

@@ -12,6 +12,7 @@
 
 #include "BejeweledDoc.h"
 #include "BejeweledView.h"
+#include "CBoard.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -59,7 +60,13 @@ void CBejeweledView::OnDraw(CDC* pDC)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
-
+	CRect rect;
+	GetClientRect(rect);
+	for (int i = 0; i < pDoc->getTaille(); i++)
+	{
+		pDC->TextOut((int)(rect.Width() / 10.0), (int)(rect.Height() / 10.0 +
+			22 * (i + 1)), pDoc->getChaine()[i], pDoc->getChaine()[i].GetLength());
+	}
 	// TODO: ajoutez ici le code de dessin pour les données natives
 }
 
@@ -126,3 +133,5 @@ CBejeweledDoc* CBejeweledView::GetDocument() const // la version non Debug est i
 
 
 // gestionnaires de messages de CBejeweledView
+
+
