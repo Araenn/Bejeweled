@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CJewels.h"
 
-const CJewels CJewels::AMETHYST = CJewels(_T("_T(Amethyst"));
+const CJewels CJewels::AMETHYST = CJewels(_T("Amethyst"));
 const CJewels CJewels::DIAMOND = CJewels(_T("Diamond"));
 const CJewels CJewels::SAPPHIRE = CJewels(_T("Sapphire"));
 const CJewels CJewels::RUBY = CJewels(_T("Ruby"));

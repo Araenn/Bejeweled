@@ -1,3 +1,8 @@
+#ifndef CJEWELS_H
+#define CJEWELS_H
+
+
+
 #pragma once
 #include <iostream>
 #include <vector>
@@ -23,3 +28,5 @@ public:
 	static const CJewels DIAMOND;
 };
 
+
+#endif // !JEWELS_H

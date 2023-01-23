@@ -5,7 +5,7 @@ CBoard::CBoard(int size) {
 	for (int i = 0; i < size; i++) {
 		vector<CJewels> line;
 		for (int j = 0; j < size; j++) {
-			line.push_back(CJewels::SAPPHIRE);
+			line.push_back(this->shuffleJewels());
 		}
 		this->grid.push_back(line);
 	}
@@ -36,4 +36,13 @@ CString* CBoard::debug_board() {
 	}
 
 	return p_valueTab;
+}
+
+/*
+return a random jewel from the list
+*/
+CJewels CBoard::shuffleJewels() {
+	vector<CJewels> listJewels = { CJewels::AMETHYST, CJewels::DIAMOND, CJewels::EMERALD, 
+		CJewels::OPALE, CJewels::RUBY, CJewels::SAPPHIRE, CJewels::TOPAZE };
+	return listJewels[rand() % listJewels.size()];
 }

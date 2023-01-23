@@ -8,6 +8,8 @@
 #include <string>
 #include <iostream>
 #include "CJewels.h"
+#include <stdlib.h>
+
 using namespace std;
 
 class CBoard
@@ -21,6 +23,7 @@ public:
 	CString getGrid(int i, int j);
 	CString * debug_board();
 	int getBoardSize();
+	CJewels shuffleJewels();
 };
 
 
