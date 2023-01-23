@@ -7,13 +7,14 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include "CJewels.h"
 using namespace std;
 
 class CBoard
 {
 private:
-	vector<vector<int>> grid;
-	int size_grid;
+	vector<vector<CJewels>> grid;
+	int m_size_grid;
 
 public:
 	CBoard(int size);

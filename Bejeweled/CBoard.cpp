@@ -3,24 +3,22 @@
 
 CBoard::CBoard(int size) {
 	for (int i = 0; i < size; i++) {
-		vector<int> line;
+		vector<CJewels> line;
 		for (int j = 0; j < size; j++) {
-			line.push_back(5);
+			line.push_back(CJewels::SAPPHIRE);
 		}
 		this->grid.push_back(line);
 	}
-	this->size_grid = size;
+	this->m_size_grid = size;
 }
 
 
 CString CBoard::getGrid(int i, int j) {
-	CString temp;
-	temp.Format(_T("%2i"), this->grid[i][j]);
-	return temp;
+	return this->grid[i][j].getNameJewels();
 }
 
 int CBoard::getBoardSize() {
-	return this->size_grid;
+	return this->m_size_grid;
 }
 
 CString* CBoard::debug_board() {

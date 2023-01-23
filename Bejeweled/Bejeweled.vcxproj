@@ -187,6 +187,7 @@
     <ClInclude Include="BejeweledDoc.h" />
     <ClInclude Include="BejeweledView.h" />
     <ClInclude Include="CBoard.h" />
+    <ClInclude Include="CJewels.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="pch.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="BejeweledDoc.cpp" />
     <ClCompile Include="BejeweledView.cpp" />
     <ClCompile Include="CBoard.cpp" />
+    <ClCompile Include="CJewels.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

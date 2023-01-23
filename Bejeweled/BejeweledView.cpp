@@ -42,6 +42,7 @@ CBejeweledView::CBejeweledView() noexcept
 
 CBejeweledView::~CBejeweledView()
 {
+
 }
 
 BOOL CBejeweledView::PreCreateWindow(CREATESTRUCT& cs)
