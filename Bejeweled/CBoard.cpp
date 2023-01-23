@@ -44,5 +44,5 @@ return a random jewel from the list
 CJewels CBoard::shuffleJewels() {
 	vector<CJewels> listJewels = { CJewels::AMETHYST, CJewels::DIAMOND, CJewels::EMERALD, 
 		CJewels::OPALE, CJewels::RUBY, CJewels::SAPPHIRE, CJewels::TOPAZE };
-	return listJewels[rand() % listJewels.size()];
+	return listJewels[rand() % listJewels.size()]; //rand between 0 and rand_max, modulo the size of list
 }

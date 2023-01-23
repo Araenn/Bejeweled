@@ -61,13 +61,28 @@ void CBejeweledView::OnDraw(CDC* pDC)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
+
+
 	CRect rect;
 	GetClientRect(rect);
-	for (int i = 0; i < pDoc->getTaille(); i++)
-	{
-		pDC->TextOut((int)(rect.Width() / 10.0), (int)(rect.Height() / 10.0 +
-			22 * (i + 1)), pDoc->getChaine()[i], pDoc->getChaine()[i].GetLength());
+
+	switch (pDoc->flag) {
+	case 1:
+
+		for (int i = 0; i < pDoc->getTaille(); i++)
+		{
+			pDC->TextOut((int)(rect.Width() / 10), (int)(rect.Height() / 10 +
+				22 * (i + 1)), pDoc->getChaine()[i], pDoc->getChaine()[i].GetLength());
+		}
+	case 2:
+		CPen blackPen;
+		blackPen.CreatePen(PS_SOLID, 1, RGB(0, 0, 0));
+		CPen* oldPen = pDC->SelectObject(&blackPen);
+		pDC->Rectangle((rect.left + rect.right) / 2 - 250 , (rect.Height() + rect.Width()) / 2 - 1000 ,
+			(rect.left + rect.right) / 2 + 250, (rect.Height() + rect.Width()));
+		pDC->SelectObject(&oldPen);
 	}
+
 	// TODO: ajoutez ici le code de dessin pour les données natives
 }
 

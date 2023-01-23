@@ -51,4 +51,9 @@ public:
 	CString *p_valueTab;
 	CString *getChaine();
 	int getTaille();
+	afx_msg void OnTestDessinboard();
+	int m_widthCase;
+	int m_heightCase;
+	int flag;
+	int m_sizeBoard;
 };

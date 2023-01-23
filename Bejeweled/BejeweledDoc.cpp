@@ -25,6 +25,7 @@ IMPLEMENT_DYNCREATE(CBejeweledDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CBejeweledDoc, CDocument)
 	ON_COMMAND(ID_TEST_AFFICHAGEGRID, &CBejeweledDoc::OnTestAffichagegrid)
+	ON_COMMAND(ID_TEST_DESSINBOARD, &CBejeweledDoc::OnTestDessinboard)
 END_MESSAGE_MAP()
 
 
@@ -32,7 +33,11 @@ END_MESSAGE_MAP()
 
 CBejeweledDoc::CBejeweledDoc() noexcept :
 	p_valueTab(NULL),
-	m_tailleTab(0)
+	m_tailleTab(0),
+	m_widthCase(0),
+	m_heightCase(0),
+	m_sizeBoard(0),
+	flag(0)
 {
 	// TODO: ajoutez ici le code d'une construction unique
 
@@ -145,6 +150,7 @@ void CBejeweledDoc::Dump(CDumpContext& dc) const
 
 void CBejeweledDoc::OnTestAffichagegrid()
 {
+	flag = 1;
 	CBoard board(8);
 	m_tailleTab = board.getBoardSize();
 	if (p_valueTab != NULL) delete[] p_valueTab;
@@ -159,4 +165,21 @@ CString *CBejeweledDoc::getChaine() {
 
 int CBejeweledDoc::getTaille() {
 	return this->m_tailleTab;
+}
+
+void CBejeweledDoc::OnTestDessinboard()
+{
+	flag = 2;
+	CBoard board(8);
+	m_tailleTab = board.getBoardSize();
+	if (p_valueTab != NULL) delete[] p_valueTab;
+	p_valueTab = new CString[m_tailleTab];
+
+	m_widthCase = m_tailleTab / 7;
+	m_heightCase = m_tailleTab / 7;
+	m_sizeBoard = m_widthCase * board.getBoardSize();
+
+	UpdateAllViews(0);
+
+	// TODO: ajoutez ici le code de votre gestionnaire de commande
 }
