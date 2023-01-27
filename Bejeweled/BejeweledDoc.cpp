@@ -45,7 +45,7 @@ CBejeweledDoc::CBejeweledDoc() noexcept :
 
 CBejeweledDoc::~CBejeweledDoc()
 {
-	if (p_valueTab != NULL) delete[] p_valueTab;
+	if (this->p_valueTab != NULL) delete[] this->p_valueTab;
 }
 
 BOOL CBejeweledDoc::OnNewDocument()
@@ -150,7 +150,7 @@ void CBejeweledDoc::Dump(CDumpContext& dc) const
 
 void CBejeweledDoc::OnTestAffichagegrid()
 {
-	flag = 1;
+	this->flag = 1;
 	CBoard board(8);
 	m_tailleTab = board.getBoardSize();
 	if (p_valueTab != NULL) delete[] p_valueTab;
@@ -169,15 +169,9 @@ int CBejeweledDoc::getTaille() {
 
 void CBejeweledDoc::OnTestDessinboard()
 {
-	flag = 2;
+	this->flag = 2;
 	CBoard board(8);
-	m_tailleTab = board.getBoardSize();
-	if (p_valueTab != NULL) delete[] p_valueTab;
-	p_valueTab = new CString[m_tailleTab];
 
-	m_widthCase = m_tailleTab / 7;
-	m_heightCase = m_tailleTab / 7;
-	m_sizeBoard = m_widthCase * board.getBoardSize();
 
 	UpdateAllViews(0);
 
