@@ -72,14 +72,52 @@ void CBejeweledView::OnDraw(CDC* pDC)
 			pDC->TextOut((int)(rect.Width() / 10), (int)(rect.Height() / 10 +
 				22 * (i + 1)), pDoc->getChaine()[i], pDoc->getChaine()[i].GetLength());
 		}
-	} else if (pDoc->flag == 2) {
+	}
+	else if (pDoc->flag == 2) {
+		int size = (rect.left + rect.right) / 3;
+		int height = size - (rect.Height() + rect.Width()) / 5;
+
+		CRect boardDraw(rect.left + size, rect.top + height, rect.right - size, rect.bottom - height);
+		int caseWidth = boardDraw.Width() / 8; // width of each case
+		int caseHeight = boardDraw.Height() / 8; // height of each case
+		int radius = (caseWidth < caseHeight) ? caseWidth / 2 : caseHeight / 2;
+		radius *= 0.8; // decrease the radius by 20%
+
 		CPen blackPen;
 		blackPen.CreatePen(PS_SOLID, 1, RGB(0, 0, 0));
 		CPen* oldPen = pDC->SelectObject(&blackPen);
-		int size = (rect.left + rect.right) / 3;
-		int height = size - (rect.Height() + rect.Width()) / 5;
-		pDC->Rectangle(rect.left + size, rect.top + height, rect.right - size, rect.bottom - height);
+		pDC->Rectangle(boardDraw);
+
+
+		CBrush blackBrush(RGB(0, 0, 0));
+		CBrush* oldBrush = pDC->SelectObject(&blackBrush);
+		pDC->Rectangle(boardDraw);		
+
+		std::vector<std::unique_ptr<CPen>> listPen;
+		listPen.push_back(std::make_unique<CPen>(PS_SOLID, 1, RGB(0, 0, 255)));
+		listPen.push_back(std::make_unique<CPen>(PS_SOLID, 1, RGB(128, 0, 128)));
+		listPen.push_back(std::make_unique<CPen>(PS_SOLID, 1, RGB(255, 255, 255)));
+		listPen.push_back(std::make_unique<CPen>(PS_SOLID, 1, RGB(255, 0, 0)));
+		listPen.push_back(std::make_unique<CPen>(PS_SOLID, 1, RGB(0, 255, 255)));
+		listPen.push_back(std::make_unique<CPen>(PS_SOLID, 1, RGB(0, 255, 0)));
+		listPen.push_back(std::make_unique<CPen>(PS_SOLID, 1, RGB(255, 192, 203)));
+
+		CPen brownPen;
+		brownPen.CreatePen(PS_SOLID, 1, RGB(88, 57, 39));
+		CBrush brownBrush(RGB(88, 57, 39));
+		pDC->SelectObject(&brownPen);
+		pDC->SelectObject(&brownBrush);
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				int case_center_x = boardDraw.left + (i + 0.5) * caseWidth;
+				int case_center_y = boardDraw.top + (j + 0.5) * caseHeight;
+				pDC->Ellipse(case_center_x - radius, case_center_y - radius, case_center_x + radius, case_center_y + radius);
+			}
+		}
+
+		pDC->SelectObject(&oldBrush);
 		pDC->SelectObject(&oldPen);
+		listPen.clear();
 	}
 
 	// TODO: ajoutez ici le code de dessin pour les données natives

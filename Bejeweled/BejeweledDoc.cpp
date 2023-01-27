@@ -171,8 +171,8 @@ void CBejeweledDoc::OnTestDessinboard()
 {
 	this->flag = 2;
 	CBoard board(8);
-
-
+	m_tailleTab = board.getBoardSize();
+	
 	UpdateAllViews(0);
 
 	// TODO: ajoutez ici le code de votre gestionnaire de commande
