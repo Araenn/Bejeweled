@@ -13,8 +13,8 @@ CBoard::CBoard(int size) {
 }
 
 
-CString CBoard::getGrid(int i, int j) {
-	return this->grid[i][j].getNameJewels();
+CJewels CBoard::getGrid(int i, int j) {
+	return this->grid[i][j];
 }
 
 int CBoard::getBoardSize() {
@@ -31,7 +31,7 @@ CString* CBoard::debug_board() {
 		p_valueTab[i] = "[";
 		temp.Format(_T("%2i"), i);
 		for (int j = 0; j < m_tailleTab; j++) {
-			p_valueTab[i] = p_valueTab[i] + this->getGrid(i, j) + (CString)"]"; //ameliorer le debug avec [
+			p_valueTab[i] = p_valueTab[i] + this->getGrid(i, j).getNameJewels() + (CString)"]"; //ameliorer le debug avec [
 		}
 	}
 

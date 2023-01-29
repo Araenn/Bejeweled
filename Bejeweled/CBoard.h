@@ -20,7 +20,7 @@ private:
 
 public:
 	CBoard(int size);
-	CString getGrid(int i, int j);
+	CJewels getGrid(int i, int j);
 	CString * debug_board();
 	int getBoardSize();
 	CJewels shuffleJewels();

@@ -13,10 +13,12 @@
 #include "BejeweledDoc.h"
 #include "BejeweledView.h"
 #include "CBoard.h"
+#include "CJewels.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+
 
 
 // CBejeweledView
@@ -91,33 +93,53 @@ void CBejeweledView::OnDraw(CDC* pDC)
 
 		CBrush blackBrush(RGB(0, 0, 0));
 		CBrush* oldBrush = pDC->SelectObject(&blackBrush);
-		pDC->Rectangle(boardDraw);		
+		pDC->Rectangle(boardDraw);
 
-		std::vector<std::unique_ptr<CPen>> listPen;
-		listPen.push_back(std::make_unique<CPen>(PS_SOLID, 1, RGB(0, 0, 255)));
-		listPen.push_back(std::make_unique<CPen>(PS_SOLID, 1, RGB(128, 0, 128)));
-		listPen.push_back(std::make_unique<CPen>(PS_SOLID, 1, RGB(255, 255, 255)));
-		listPen.push_back(std::make_unique<CPen>(PS_SOLID, 1, RGB(255, 0, 0)));
-		listPen.push_back(std::make_unique<CPen>(PS_SOLID, 1, RGB(0, 255, 255)));
-		listPen.push_back(std::make_unique<CPen>(PS_SOLID, 1, RGB(0, 255, 0)));
-		listPen.push_back(std::make_unique<CPen>(PS_SOLID, 1, RGB(255, 192, 203)));
+		vector<unique_ptr<CPen>> listPen;
+		listPen.push_back(make_unique<CPen>(PS_SOLID, 1, BLUE));
+		listPen.push_back(make_unique<CPen>(PS_SOLID, 1, PURPLE));
+		listPen.push_back(make_unique<CPen>(PS_SOLID, 1, WHITE));
+		listPen.push_back(make_unique<CPen>(PS_SOLID, 1, RED));
+		listPen.push_back(make_unique<CPen>(PS_SOLID, 1, YELLOW));
+		listPen.push_back(make_unique<CPen>(PS_SOLID, 1, GREEN));
+		listPen.push_back(make_unique<CPen>(PS_SOLID, 1, PINK));
 
-		CPen brownPen;
-		brownPen.CreatePen(PS_SOLID, 1, RGB(88, 57, 39));
-		CBrush brownBrush(RGB(88, 57, 39));
-		pDC->SelectObject(&brownPen);
-		pDC->SelectObject(&brownBrush);
+		vector<unique_ptr<CBrush>> listBrush;
+		listBrush.push_back(make_unique<CBrush>(BLUE));
+		listBrush.push_back(make_unique<CBrush>(PURPLE));
+		listBrush.push_back(make_unique<CBrush>(WHITE));
+		listBrush.push_back(make_unique<CBrush>(RED));
+		listBrush.push_back(make_unique<CBrush>(YELLOW));
+		listBrush.push_back(make_unique<CBrush>(GREEN));
+		listBrush.push_back(make_unique<CBrush>(PINK));
+
+		CBoard board(8);
+
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				int case_center_x = boardDraw.left + (i + 0.5) * caseWidth;
-				int case_center_y = boardDraw.top + (j + 0.5) * caseHeight;
-				pDC->Ellipse(case_center_x - radius, case_center_y - radius, case_center_x + radius, case_center_y + radius);
+				for (int k = 0; k < listBrush.size(); k++) {
+					LOGPEN logPen;
+					listPen[k]->GetLogPen(&logPen);
+					COLORREF colorP = logPen.lopnColor;
+
+					LOGBRUSH logBrush;
+					listBrush[k]->GetLogBrush(&logBrush);
+					COLORREF colorB = logBrush.lbColor;
+					if (board.getGrid(i, j).getColorJewels() == colorP && board.getGrid(i, j).getColorJewels() == colorB) {
+						pDC->SelectObject(listPen[k].get());
+						pDC->SelectObject(listBrush[k].get());
+						int case_center_x = boardDraw.left + (i + 0.5) * caseWidth;
+						int case_center_y = boardDraw.top + (j + 0.5) * caseHeight;
+						pDC->Ellipse(case_center_x - radius, case_center_y - radius, case_center_x + radius, case_center_y + radius);
+					}
+				}
 			}
 		}
 
 		pDC->SelectObject(&oldBrush);
 		pDC->SelectObject(&oldPen);
 		listPen.clear();
+		listBrush.clear();
 	}
 
 	// TODO: ajoutez ici le code de dessin pour les données natives
@@ -183,7 +205,6 @@ CBejeweledDoc* CBejeweledView::GetDocument() const // la version non Debug est i
 	return (CBejeweledDoc*)m_pDocument;
 }
 #endif //_DEBUG
-
 
 // gestionnaires de messages de CBejeweledView
 

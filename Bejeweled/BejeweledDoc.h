@@ -5,7 +5,6 @@
 
 #pragma once
 
-
 class CBejeweledDoc : public CDocument
 {
 protected: // création à partir de la sérialisation uniquement
