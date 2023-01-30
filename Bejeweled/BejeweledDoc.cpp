@@ -154,7 +154,6 @@ void CBejeweledDoc::OnTestAffichagegrid()
 	CBoard board(8);
 	m_tailleTab = board.getBoardSize();
 	if (p_valueTab != NULL) delete[] p_valueTab;
-	p_valueTab = new CString[m_tailleTab];
 	p_valueTab = board.debug_board();
 	UpdateAllViews(0);
 }
@@ -172,7 +171,12 @@ void CBejeweledDoc::OnTestDessinboard()
 	this->flag = 2;
 	CBoard board(8);
 	m_tailleTab = board.getBoardSize();
-	
+
+	for (int i = 0; i < m_tailleTab; i++) {
+		for (int j = 0; j < m_tailleTab; j++) {
+			m_color.push_back(board[i][j].getColorJewels());
+		}
+	}
 	UpdateAllViews(0);
 
 	// TODO: ajoutez ici le code de votre gestionnaire de commande

@@ -20,10 +20,11 @@ private:
 
 public:
 	CBoard(int size);
-	CJewels getGrid(int i, int j);
 	CString * debug_board();
 	int getBoardSize();
 	CJewels shuffleJewels();
+
+	vector<CJewels> operator[](int index);
 };
 
 

@@ -12,9 +12,8 @@ CBoard::CBoard(int size) {
 	this->m_size_grid = size;
 }
 
-
-CJewels CBoard::getGrid(int i, int j) {
-	return this->grid[i][j];
+vector<CJewels> CBoard::operator[](int index) {
+	return this->grid[index];
 }
 
 int CBoard::getBoardSize() {
@@ -25,13 +24,13 @@ CString* CBoard::debug_board() {
 	int m_tailleTab = getBoardSize();
 	CString temp;
 
-	CString *p_valueTab;
-	p_valueTab = new CString[m_tailleTab];
+	CString *p_valueTab = new CString[m_tailleTab];
+	CString square_bracket[] = { (CString)'[', (CString)']' };
+
 	for (int i = 0; i < m_tailleTab; i++) {
-		p_valueTab[i] = "[";
 		temp.Format(_T("%2i"), i);
 		for (int j = 0; j < m_tailleTab; j++) {
-			p_valueTab[i] = p_valueTab[i] + this->getGrid(i, j).getNameJewels() + (CString)"]"; //ameliorer le debug avec [
+			p_valueTab[i] = p_valueTab[i] + square_bracket[0] + this->grid[i][j].getNameJewels() + square_bracket[1]; //ameliorer le debug avec [
 		}
 	}
 
@@ -42,7 +41,14 @@ CString* CBoard::debug_board() {
 return a random jewel from the list
 */
 CJewels CBoard::shuffleJewels() {
-	vector<CJewels> listJewels = { CJewels::AMETHYST, CJewels::DIAMOND, CJewels::EMERALD, 
-		CJewels::OPALE, CJewels::RUBY, CJewels::SAPPHIRE, CJewels::TOPAZE };
+	vector<CJewels> listJewels = { 
+		CJewels::AMETHYST, 
+		CJewels::DIAMOND, 
+		CJewels::EMERALD, 
+		CJewels::OPALE, 
+		CJewels::RUBY, 
+		CJewels::SAPPHIRE, 
+		CJewels::TOPAZE 
+	};
 	return listJewels[rand() % listJewels.size()]; //rand between 0 and rand_max, modulo the size of list
 }

@@ -1,7 +1,7 @@
 
 // BejeweledDoc.h : interface de la classe CBejeweledDoc
 //
-
+#include <vector>
 
 #pragma once
 
@@ -55,4 +55,5 @@ public:
 	int m_heightCase;
 	int flag;
 	int m_sizeBoard;
+	std::vector<COLORREF> m_color;
 };
