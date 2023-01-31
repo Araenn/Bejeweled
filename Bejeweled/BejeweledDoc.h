@@ -56,4 +56,6 @@ public:
 	int flag;
 	int m_sizeBoard;
 	std::vector<COLORREF> m_color;
+	afx_msg void OnOptionsTailleduplateau();
+	afx_msg void OnOptionsNombredepierres();
 };

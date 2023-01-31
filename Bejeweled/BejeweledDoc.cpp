@@ -26,6 +26,8 @@ IMPLEMENT_DYNCREATE(CBejeweledDoc, CDocument)
 BEGIN_MESSAGE_MAP(CBejeweledDoc, CDocument)
 	ON_COMMAND(ID_TEST_AFFICHAGEGRID, &CBejeweledDoc::OnTestAffichagegrid)
 	ON_COMMAND(ID_TEST_DESSINBOARD, &CBejeweledDoc::OnTestDessinboard)
+	ON_COMMAND(ID_OPTIONS_TAILLEDUPLATEAU, &CBejeweledDoc::OnOptionsTailleduplateau)
+	ON_COMMAND(ID_OPTIONS_NOMBREDEPIERRES, &CBejeweledDoc::OnOptionsNombredepierres)
 END_MESSAGE_MAP()
 
 
@@ -179,5 +181,17 @@ void CBejeweledDoc::OnTestDessinboard()
 	}
 	UpdateAllViews(0);
 
+	// TODO: ajoutez ici le code de votre gestionnaire de commande
+}
+
+
+void CBejeweledDoc::OnOptionsTailleduplateau()
+{
+	// TODO: ajoutez ici le code de votre gestionnaire de commande
+}
+
+
+void CBejeweledDoc::OnOptionsNombredepierres()
+{
 	// TODO: ajoutez ici le code de votre gestionnaire de commande
 }
