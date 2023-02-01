@@ -15,15 +15,17 @@ using namespace std;
 class CBoard
 {
 private:
-	vector<vector<CJewels>> grid;
+	std::vector<std::vector<CJewels>> grid;
 	int m_size_grid;
+	
+	int m_stoneNumber;
 
 public:
 	CBoard(int size);
 	CString * debug_board();
 	int getBoardSize();
 	CJewels shuffleJewels();
-
+	void intervertJewels(int i, int j, CJewels p);
 	vector<CJewels> operator[](int index);
 };
 

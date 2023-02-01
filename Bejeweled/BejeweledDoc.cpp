@@ -13,6 +13,7 @@
 #include "BejeweledDoc.h"
 #include "CBoard.h"
 #include "DlgSizeBoard.h"
+#include "DlgStoneNumber.h"
 
 #include <propkey.h>
 
@@ -36,19 +37,21 @@ END_MESSAGE_MAP()
 
 CBejeweledDoc::CBejeweledDoc() noexcept :
 	p_valueTab(NULL),
-	m_tailleTab(0),
+	m_tailleTab(8),
+	m_stoneNumber(6),
 	m_widthCase(0),
 	m_heightCase(0),
-	m_sizeBoard(0),
 	flag(0)
 {
 	// TODO: ajoutez ici le code d'une construction unique
+
 
 }
 
 CBejeweledDoc::~CBejeweledDoc()
 {
 	if (this->p_valueTab != NULL) delete[] this->p_valueTab;
+	m_color.clear();
 }
 
 BOOL CBejeweledDoc::OnNewDocument()
@@ -172,13 +175,12 @@ void CBejeweledDoc::OnTestDessinboard()
 {
 	this->flag = 2;
 	CBoard board(m_tailleTab);
-	
-
 	for (int i = 0; i < m_tailleTab; i++) {
 		for (int j = 0; j < m_tailleTab; j++) {
 			m_color.push_back(board[i][j].getColorJewels());
 		}
 	}
+
 	UpdateAllViews(0);
 
 	// TODO: ajoutez ici le code de votre gestionnaire de commande
@@ -190,7 +192,7 @@ void CBejeweledDoc::OnOptionsTailleduplateau()
 	// TODO: ajoutez ici le code de votre gestionnaire de commande
 	DlgSizeBoard dlg;
 	dlg.DoModal();
-	m_tailleTab = dlg.m_sliderValue;
+	m_tailleTab = (int) dlg.m_sliderValue;
 	UpdateAllViews(0);
 }
 
@@ -198,4 +200,8 @@ void CBejeweledDoc::OnOptionsTailleduplateau()
 void CBejeweledDoc::OnOptionsNombredepierres()
 {
 	// TODO: ajoutez ici le code de votre gestionnaire de commande
+	DlgStoneNumber dlg;
+	dlg.DoModal();
+	m_stoneNumber = dlg.m_sliderStoneNumber;
+	UpdateAllViews(0);
 }

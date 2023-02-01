@@ -78,7 +78,6 @@ void CBejeweledView::OnDraw(CDC* pDC)
 				pDoc->getChaine()[i], 
 				pDoc->getChaine()[i].GetLength()
 			);
-			pDoc->flag = 0;
 		}
 	}
 	else if (pDoc->flag == 2) {
@@ -105,8 +104,6 @@ void CBejeweledView::OnDraw(CDC* pDC)
 
 		for (int i = 0; i < pDoc->m_tailleTab; i++) {
 			for (int j = 0; j < pDoc->m_tailleTab; j++) {
-				//CPen newPen(PS_SOLID, 1, pDoc->m_color[i * pDoc->m_tailleTab + j]);
-				//pDC->SelectObject(newPen);
 				CBrush newBrush(pDoc->m_color[i * pDoc->m_tailleTab + j]);
 				pDC->SelectObject(newBrush);
 
@@ -118,7 +115,6 @@ void CBejeweledView::OnDraw(CDC* pDC)
 
 		pDC->SelectObject(&oldBrush);
 		pDC->SelectObject(&oldPen);
-		pDoc->flag = 0;
 	}
 
 	// TODO: ajoutez ici le code de dessin pour les données natives

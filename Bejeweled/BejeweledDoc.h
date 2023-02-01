@@ -47,6 +47,7 @@ protected:
 public:
 	afx_msg void OnTestAffichagegrid();
 	int m_tailleTab;
+	int m_stoneNumber;
 	CString *p_valueTab;
 	CString *getChaine();
 	int getTaille();
@@ -54,7 +55,6 @@ public:
 	int m_widthCase;
 	int m_heightCase;
 	int flag;
-	int m_sizeBoard;
 	std::vector<COLORREF> m_color;
 	afx_msg void OnOptionsTailleduplateau();
 	afx_msg void OnOptionsNombredepierres();

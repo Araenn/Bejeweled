@@ -3,7 +3,7 @@
 
 CBoard::CBoard(int size) {
 	for (int i = 0; i < size; i++) {
-		vector<CJewels> line;
+		std::vector<CJewels> line;
 		for (int j = 0; j < size; j++) {
 			line.push_back(this->shuffleJewels());
 		}
@@ -41,14 +41,20 @@ CString* CBoard::debug_board() {
 return a random jewel from the list
 */
 CJewels CBoard::shuffleJewels() {
-	vector<CJewels> listJewels = { 
-		CJewels::AMETHYST, 
-		CJewels::DIAMOND, 
-		CJewels::EMERALD, 
-		CJewels::OPALE, 
-		CJewels::RUBY, 
-		CJewels::SAPPHIRE, 
-		CJewels::TOPAZE 
+	vector<CJewels> listJewels = {
+		CJewels::AMETHYST,
+		CJewels::DIAMOND,
+		CJewels::EMERALD,
+		CJewels::OPALE,
+		CJewels::RUBY,
+		CJewels::SAPPHIRE,
+		CJewels::TOPAZE
 	};
 	return listJewels[rand() % listJewels.size()]; //rand between 0 and rand_max, modulo the size of list
+}
+
+void CBoard::intervertJewels(int i, int j, CJewels p) {
+	CJewels temp = p;
+	p = this->grid[i][j];
+	this->grid[i][j] = temp;
 }
