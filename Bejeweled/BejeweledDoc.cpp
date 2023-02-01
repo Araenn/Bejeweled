@@ -12,6 +12,7 @@
 
 #include "BejeweledDoc.h"
 #include "CBoard.h"
+#include "DlgSizeBoard.h"
 
 #include <propkey.h>
 
@@ -153,8 +154,7 @@ void CBejeweledDoc::Dump(CDumpContext& dc) const
 void CBejeweledDoc::OnTestAffichagegrid()
 {
 	this->flag = 1;
-	CBoard board(8);
-	m_tailleTab = board.getBoardSize();
+	CBoard board(m_tailleTab);
 	if (p_valueTab != NULL) delete[] p_valueTab;
 	p_valueTab = board.debug_board();
 	UpdateAllViews(0);
@@ -171,8 +171,8 @@ int CBejeweledDoc::getTaille() {
 void CBejeweledDoc::OnTestDessinboard()
 {
 	this->flag = 2;
-	CBoard board(8);
-	m_tailleTab = board.getBoardSize();
+	CBoard board(m_tailleTab);
+	
 
 	for (int i = 0; i < m_tailleTab; i++) {
 		for (int j = 0; j < m_tailleTab; j++) {
@@ -188,6 +188,10 @@ void CBejeweledDoc::OnTestDessinboard()
 void CBejeweledDoc::OnOptionsTailleduplateau()
 {
 	// TODO: ajoutez ici le code de votre gestionnaire de commande
+	DlgSizeBoard dlg;
+	dlg.DoModal();
+	m_tailleTab = dlg.m_sliderValue;
+	UpdateAllViews(0);
 }
 
 

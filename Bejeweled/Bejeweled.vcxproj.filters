@@ -45,6 +45,9 @@
     <ClInclude Include="CJewels.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="DlgSizeBoard.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bejeweled.cpp">
@@ -66,6 +69,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="CJewels.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgSizeBoard.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

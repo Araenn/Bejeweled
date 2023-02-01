@@ -78,18 +78,19 @@ void CBejeweledView::OnDraw(CDC* pDC)
 				pDoc->getChaine()[i], 
 				pDoc->getChaine()[i].GetLength()
 			);
-
+			pDoc->flag = 0;
 		}
 	}
 	else if (pDoc->flag == 2) {
+		
 		int size = (rect.left + rect.right) / 3;
 		int height = size - (rect.Height() + rect.Width()) / 5;
 
 		CRect boardDraw(rect.left + size, rect.top + height, rect.right - size, rect.bottom - height);
-		int caseWidth = boardDraw.Width() / 8; // width of each case
-		int caseHeight = boardDraw.Height() / 8; // height of each case
+		int caseWidth = boardDraw.Width() / pDoc->m_tailleTab; // width of each case
+		int caseHeight = boardDraw.Height() / pDoc->m_tailleTab; // height of each case
 		int radius = (caseWidth < caseHeight) ? caseWidth / 2 : caseHeight / 2;
-		radius *= 0.8; // decrease the radius by 20%
+		radius *= 0.9; // decrease the radius by 20%
 
 		CPen blackPen;
 		blackPen.CreatePen(PS_SOLID, 1, RGB(0, 0, 0));
@@ -97,15 +98,15 @@ void CBejeweledView::OnDraw(CDC* pDC)
 		pDC->Rectangle(boardDraw);
 
 
-		CBrush blackBrush(RGB(0, 0, 0));
+		CBrush blackBrush(RGB(100, 75, 100));
 		CBrush* oldBrush = pDC->SelectObject(&blackBrush);
 		pDC->Rectangle(boardDraw);
 
 
 		for (int i = 0; i < pDoc->m_tailleTab; i++) {
 			for (int j = 0; j < pDoc->m_tailleTab; j++) {
-				CPen newPen(PS_SOLID, 1, pDoc->m_color[i * pDoc->m_tailleTab + j]);
-				pDC->SelectObject(newPen);
+				//CPen newPen(PS_SOLID, 1, pDoc->m_color[i * pDoc->m_tailleTab + j]);
+				//pDC->SelectObject(newPen);
 				CBrush newBrush(pDoc->m_color[i * pDoc->m_tailleTab + j]);
 				pDC->SelectObject(newBrush);
 
@@ -117,6 +118,7 @@ void CBejeweledView::OnDraw(CDC* pDC)
 
 		pDC->SelectObject(&oldBrush);
 		pDC->SelectObject(&oldPen);
+		pDoc->flag = 0;
 	}
 
 	// TODO: ajoutez ici le code de dessin pour les données natives
