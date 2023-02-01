@@ -157,7 +157,7 @@ void CBejeweledDoc::Dump(CDumpContext& dc) const
 void CBejeweledDoc::OnTestAffichagegrid()
 {
 	this->flag = 1;
-	CBoard board(m_tailleTab);
+	CBoard board(m_tailleTab, m_stoneNumber);
 	if (p_valueTab != NULL) delete[] p_valueTab;
 	p_valueTab = board.debug_board();
 	UpdateAllViews(0);
@@ -175,7 +175,7 @@ void CBejeweledDoc::OnTestDessinboard()
 {
 	m_color.clear();
 	this->flag = 2;
-	CBoard board(m_tailleTab);
+	CBoard board(m_tailleTab, m_stoneNumber);
 	for (int i = 0; i < m_tailleTab; i++) {
 		for (int j = 0; j < m_tailleTab; j++) {
 			m_color.push_back(board[i][j].getColorJewels());
@@ -204,5 +204,5 @@ void CBejeweledDoc::OnOptionsNombredepierres()
 	DlgStoneNumber dlg;
 	dlg.DoModal();
 	m_stoneNumber = dlg.m_sliderStoneNumber;
-
+	OnTestDessinboard();
 }

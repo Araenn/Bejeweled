@@ -50,7 +50,7 @@ public:
 	int m_stoneNumber;
 	CString *p_valueTab;
 	CString *getChaine();
-	int getTaille();
+	int getTaille() const;
 	afx_msg void OnTestDessinboard();
 	int m_widthCase;
 	int m_heightCase;

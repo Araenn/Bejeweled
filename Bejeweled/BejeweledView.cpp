@@ -68,6 +68,12 @@ void CBejeweledView::OnDraw(CDC* pDC)
 	CRect rect;
 	GetClientRect(rect);
 
+	CPen mulberryPen(PS_SOLID, 1, RGB(74, 16, 12));
+	CPen* oldPen = pDC->SelectObject(&mulberryPen);
+	CBrush mulberryBrush(RGB(74, 16, 12));
+	CBrush* oldBrush = pDC->SelectObject(&mulberryBrush);
+	pDC->Rectangle(rect);
+
 	if (pDoc->flag == 1) {
 		for (int i = 0; i < pDoc->getTaille(); i++) {
 			
@@ -91,14 +97,13 @@ void CBejeweledView::OnDraw(CDC* pDC)
 		int radius = (caseWidth < caseHeight) ? caseWidth / 2 : caseHeight / 2;
 		radius *= 0.9; // decrease the radius by 20%
 
-		CPen blackPen;
-		blackPen.CreatePen(PS_SOLID, 1, RGB(0, 0, 0));
-		CPen* oldPen = pDC->SelectObject(&blackPen);
+		CPen blackPen(PS_SOLID, 1, RGB(0, 0, 0));
+		pDC->SelectObject(blackPen);
 		pDC->Rectangle(boardDraw);
 
 
 		CBrush blackBrush(RGB(100, 75, 100));
-		CBrush* oldBrush = pDC->SelectObject(&blackBrush);
+		pDC->SelectObject(&blackBrush);
 		pDC->Rectangle(boardDraw);
 
 

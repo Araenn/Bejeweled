@@ -15,6 +15,7 @@ constexpr COLORREF RED RGB(255, 0, 0);
 constexpr COLORREF YELLOW RGB(255, 255, 0);
 constexpr COLORREF GREEN RGB(0, 255, 0);
 constexpr COLORREF PINK  RGB(255, 192, 203);
+constexpr COLORREF DEEP_PURPLE RGB(20, 0, 20);
 
 class CJewels
 {
@@ -35,6 +36,7 @@ public:
 	static const CJewels AMETHYST;
 	static const CJewels OPALE;
 	static const CJewels DIAMOND;
+	static const CJewels OBSIDIAN;
 };
 
 

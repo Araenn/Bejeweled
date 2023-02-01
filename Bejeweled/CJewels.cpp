@@ -8,6 +8,7 @@ const CJewels CJewels::RUBY = CJewels(_T("Ruby"), RED);
 const CJewels CJewels::TOPAZE = CJewels(_T("Topaze"), YELLOW);
 const CJewels CJewels::EMERALD = CJewels(_T("Emerald"), GREEN);
 const CJewels CJewels::OPALE = CJewels(_T("Opale"), PINK);
+const CJewels CJewels::OBSIDIAN = CJewels(_T("Obsidian"), DEEP_PURPLE);
 
 CJewels::CJewels(CString name, COLORREF m_color) {
 	this->m_name = name;

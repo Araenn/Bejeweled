@@ -16,15 +16,24 @@ class CBoard
 {
 private:
 	std::vector<std::vector<CJewels>> grid;
-	int m_size_grid;
-	
+	int m_size_grid;	
 	int m_stoneNumber;
+	vector<CJewels> listJewels = {
+		CJewels::AMETHYST,
+		CJewels::DIAMOND,
+		CJewels::EMERALD,
+		CJewels::OPALE,
+		CJewels::RUBY,
+		CJewels::SAPPHIRE,
+		CJewels::TOPAZE,
+		CJewels::OBSIDIAN
+	};
 
 public:
-	CBoard(int size);
+	CBoard(int size, int stone);
 	CString * debug_board();
 	int getBoardSize();
-	CJewels shuffleJewels();
+	CJewels shuffleJewels(int stone);
 	void intervertJewels(int i, int j, CJewels p);
 	vector<CJewels> operator[](int index);
 };
