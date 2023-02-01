@@ -51,7 +51,7 @@ CBejeweledDoc::CBejeweledDoc() noexcept :
 CBejeweledDoc::~CBejeweledDoc()
 {
 	if (this->p_valueTab != NULL) delete[] this->p_valueTab;
-	m_color.clear();
+
 }
 
 BOOL CBejeweledDoc::OnNewDocument()
@@ -167,12 +167,13 @@ CString *CBejeweledDoc::getChaine() {
 	return this->p_valueTab;
 }
 
-int CBejeweledDoc::getTaille() {
+int CBejeweledDoc::getTaille() const {
 	return this->m_tailleTab;
 }
 
 void CBejeweledDoc::OnTestDessinboard()
 {
+	m_color.clear();
 	this->flag = 2;
 	CBoard board(m_tailleTab);
 	for (int i = 0; i < m_tailleTab; i++) {
@@ -193,7 +194,7 @@ void CBejeweledDoc::OnOptionsTailleduplateau()
 	DlgSizeBoard dlg;
 	dlg.DoModal();
 	m_tailleTab = (int) dlg.m_sliderValue;
-	UpdateAllViews(0);
+	OnTestDessinboard();
 }
 
 
@@ -203,5 +204,5 @@ void CBejeweledDoc::OnOptionsNombredepierres()
 	DlgStoneNumber dlg;
 	dlg.DoModal();
 	m_stoneNumber = dlg.m_sliderStoneNumber;
-	UpdateAllViews(0);
+
 }
