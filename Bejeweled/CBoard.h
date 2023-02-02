@@ -26,7 +26,15 @@ private:
 		CJewels::RUBY,
 		CJewels::SAPPHIRE,
 		CJewels::TOPAZE,
-		CJewels::OBSIDIAN
+		CJewels::AQUA,
+		CJewels::CRYSTAL,
+		CJewels::KUNZITE,
+		CJewels::PHOENIX,
+		CJewels::SANDSTONE,
+		CJewels::SANGUINE,
+		CJewels::SUNSTONE,
+		CJewels::TOURMALINE,
+		CJewels::TURQUOISE
 	};
 
 public:

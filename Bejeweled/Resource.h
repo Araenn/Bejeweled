@@ -15,7 +15,6 @@
 #define IDR_MAINFRAME                   128
 #define IDR_MAINFRAME_256               129
 #define IDR_BejeweledTYPE               130
-#define IDR_THEME_MENU                  200
 #define ID_SET_STYLE                    201
 #define ID_VIEW_APPLOOK_WIN_2000        205
 #define ID_VIEW_APPLOOK_OFF_XP          206
@@ -27,12 +26,10 @@
 #define ID_VIEW_APPLOOK_OFF_2007_BLACK  216
 #define ID_VIEW_APPLOOK_OFF_2007_SILVER 217
 #define ID_VIEW_APPLOOK_OFF_2007_AQUA   218
-#define ID_VIEW_APPLOOK_WINDOWS_7       219
 #define IDS_EDIT_MENU                   306
 #define IDD_DIALOG_SIZEBOARD            310
 #define IDD_DIALOG_STONENUMBER          312
 #define IDC_SLIDER_SIZEBOARD            1000
-#define IDC_SLIDER1                     1001
 #define IDC_SLIDER_STONENUMBER          1001
 #define ID_TEST_AFFICHAGEGRID           32771
 #define ID_TEST_DESSINBOARD             32772

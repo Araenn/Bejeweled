@@ -26,7 +26,7 @@ void DlgStoneNumber::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Slider(pDX, IDC_SLIDER_STONENUMBER, m_sliderStoneNumber);
-	DDV_MinMaxInt(pDX, m_sliderStoneNumber, 6, 15);
+	DDV_MinMaxInt(pDX, m_sliderStoneNumber, 6, 16);
 }
 
 

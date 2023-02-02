@@ -70,7 +70,7 @@ void CBejeweledView::OnDraw(CDC* pDC)
 
 	CPen mulberryPen(PS_SOLID, 1, RGB(74, 16, 12));
 	CPen* oldPen = pDC->SelectObject(&mulberryPen);
-	CBrush mulberryBrush(RGB(74, 16, 12));
+	CBrush mulberryBrush(RGB(32, 30, 32));
 	CBrush* oldBrush = pDC->SelectObject(&mulberryBrush);
 	pDC->Rectangle(rect);
 
@@ -102,7 +102,7 @@ void CBejeweledView::OnDraw(CDC* pDC)
 		pDC->Rectangle(boardDraw);
 
 
-		CBrush blackBrush(RGB(100, 75, 100));
+		CBrush blackBrush(RGB(224, 169, 109));
 		pDC->SelectObject(&blackBrush);
 		pDC->Rectangle(boardDraw);
 

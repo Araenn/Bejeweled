@@ -1,5 +1,9 @@
-﻿  BejeweledView.cpp
+﻿  BejeweledDoc.cpp
+  BejeweledView.cpp
 C:\Users\leaye\Documents\Lea\Etudes\SeaTech\2A\S1\IHM\Projet\Bejeweled\Bejeweled\BejeweledView.cpp(98,16): warning C4244: '*=' : conversion de 'double' en 'int', perte possible de données
 C:\Users\leaye\Documents\Lea\Etudes\SeaTech\2A\S1\IHM\Projet\Bejeweled\Bejeweled\BejeweledView.cpp(115,23): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
 C:\Users\leaye\Documents\Lea\Etudes\SeaTech\2A\S1\IHM\Projet\Bejeweled\Bejeweled\BejeweledView.cpp(116,23): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+  CBoard.cpp
+  CJewels.cpp
+  Génération de code en cours...
   Bejeweled.vcxproj -> C:\Users\leaye\Documents\Lea\Etudes\SeaTech\2A\S1\IHM\Projet\Bejeweled\Debug\Bejeweled.exe
