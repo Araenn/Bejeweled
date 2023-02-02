@@ -44,7 +44,6 @@ CBejeweledView::CBejeweledView() noexcept :
 	caseWidth(0),
 	radius(0),
 	sizeBoard(0),
-	boardDraw(0),
 	firstClickX(-1),
 	firstClickY(-1),
 	secondClickX(0),
@@ -233,6 +232,12 @@ void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	int secondJewelX = (secondClickX - rect.left - size )/ caseWidth;
 	int secondJewelY = (secondClickY - rect.top - height) / caseHeight;
+
+	if (!pDoc->m_pBoard->isAdjacent(firstJewelX, firstJewelY, secondJewelX, secondJewelY)) {
+		firstClickX = -1;
+		firstClickY = -1;
+		return;
+	}
 
 	pDoc->invertJewels(firstJewelX, firstJewelY, secondJewelX, secondJewelY);
 

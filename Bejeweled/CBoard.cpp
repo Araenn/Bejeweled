@@ -62,3 +62,7 @@ void CBoard::intervertJewels(int i, int j, int x, int y) {
 	this->grid[i][j] = this->grid[x][y];
 	this->grid[x][y] = temp;
 }
+
+BOOL CBoard::isAdjacent(int x1, int y1, int x2, int y2) {
+	return ManhattanDistance(x1, y1, x2, y2) == 1;
+}

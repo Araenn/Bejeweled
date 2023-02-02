@@ -9,6 +9,7 @@
 #include <iostream>
 #include "CJewels.h"
 #include <stdlib.h>
+#include "CMathUtils.h"
 
 using namespace std;
 
@@ -45,6 +46,7 @@ public:
 	CJewels shuffleJewels(int stone);
 	void intervertJewels(int i, int j, int x, int y);
 	vector<CJewels> operator[](int index);
+	BOOL isAdjacent(int x1, int y1, int x2, int y2);
 };
 
 
