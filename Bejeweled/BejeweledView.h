@@ -44,6 +44,21 @@ protected:
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	DECLARE_MESSAGE_MAP()
 
+public:
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+
+	int size;
+	int height;
+	int caseWidth;
+	int caseHeight;
+	int radius;
+	CRect rect;
+	CRect boardDraw;
+	int sizeBoard;
+	int firstClickX;
+	int firstClickY;
+	int secondClickX;
+	int secondClickY;
 };
 
 #ifndef _DEBUG  // version Debug dans BejeweledView.cpp

@@ -21,7 +21,7 @@ constexpr COLORREF OIGNON RGB(213, 132, 144);
 constexpr COLORREF ORANGE RGB(255, 127, 0);
 constexpr COLORREF PAILLE RGB(254, 227, 71);
 constexpr COLORREF CORAIL RGB(231, 62, 1);
-constexpr COLORREF RED_FIRE RGB(255, 73, 1);
+constexpr COLORREF RED_FIRE RGB(150, 73, 1);
 constexpr COLORREF DARK_BLUE RGB(15, 5, 107);
 constexpr COLORREF GREEN_CYAN RGB(9, 189, 140);
 
@@ -34,7 +34,7 @@ private:
 public:
 	CJewels(CString m_name, COLORREF m_color);
 	~CJewels();
-	COLORREF getColorJewels();
+	COLORREF getColorJewels() ;
 	CString getNameJewels();
 
 	static const CJewels SAPPHIRE;

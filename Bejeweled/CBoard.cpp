@@ -1,6 +1,19 @@
 #include "pch.h"
 #include "CBoard.h"
 
+CBoard::CBoard() {
+	int size = 8;
+	int stone = 6;
+	for (int i = 0; i < size; i++) {
+		std::vector<CJewels> line;
+		for (int j = 0; j < size; j++) {
+			line.push_back(this->shuffleJewels(stone));
+		}
+		this->grid.push_back(line);
+	}
+	this->m_size_grid = size;
+}
+
 CBoard::CBoard(int size, int stone) {
 	for (int i = 0; i < size; i++) {
 		std::vector<CJewels> line;
@@ -41,11 +54,11 @@ CString* CBoard::debug_board() {
 return a random jewel from the list
 */
 CJewels CBoard::shuffleJewels(int stone) {
-	return listJewels[(rand() % listJewels.size()) % stone]; //rand between 0 and rand_max, modulo the size of list
+	return listJewels[(rand() % min(listJewels.size(), stone))]; //rand between 0 and rand_max, modulo the size of list
 }
 
-void CBoard::intervertJewels(int i, int j, CJewels p) {
-	CJewels temp = p;
-	p = this->grid[i][j];
-	this->grid[i][j] = temp;
+void CBoard::intervertJewels(int i, int j, int x, int y) {
+	CJewels temp = this->grid[i][j];
+	this->grid[i][j] = this->grid[x][y];
+	this->grid[x][y] = temp;
 }

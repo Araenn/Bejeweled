@@ -44,13 +44,14 @@ CBejeweledDoc::CBejeweledDoc() noexcept :
 	flag(0)
 {
 	// TODO: ajoutez ici le code d'une construction unique
-
+	m_pBoard = new CBoard(m_tailleTab, m_stoneNumber);
 
 }
 
 CBejeweledDoc::~CBejeweledDoc()
 {
 	if (this->p_valueTab != NULL) delete[] this->p_valueTab;
+	delete m_pBoard;
 
 }
 
@@ -157,9 +158,10 @@ void CBejeweledDoc::Dump(CDumpContext& dc) const
 void CBejeweledDoc::OnTestAffichagegrid()
 {
 	this->flag = 1;
-	CBoard board(m_tailleTab, m_stoneNumber);
+	delete m_pBoard;
+	m_pBoard = new CBoard(m_tailleTab, m_stoneNumber);
 	if (p_valueTab != NULL) delete[] p_valueTab;
-	p_valueTab = board.debug_board();
+	p_valueTab = m_pBoard->debug_board();
 	UpdateAllViews(0);
 }
 
@@ -175,13 +177,9 @@ void CBejeweledDoc::OnTestDessinboard()
 {
 	m_color.clear();
 	this->flag = 2;
-	CBoard board(m_tailleTab, m_stoneNumber);
-	for (int i = 0; i < m_tailleTab; i++) {
-		for (int j = 0; j < m_tailleTab; j++) {
-			m_color.push_back(board[i][j].getColorJewels());
-		}
-	}
-
+	delete m_pBoard;
+	m_pBoard = new CBoard(m_tailleTab, m_stoneNumber);
+	updateBoard();
 	UpdateAllViews(0);
 
 	// TODO: ajoutez ici le code de votre gestionnaire de commande
@@ -205,4 +203,25 @@ void CBejeweledDoc::OnOptionsNombredepierres()
 	dlg.DoModal();
 	m_stoneNumber = dlg.m_sliderStoneNumber;
 	OnTestDessinboard();
+}
+
+/*
+* swap jewels 1 with jewels 2 according to their coordinates x, y
+*/
+void CBejeweledDoc::invertJewels(int x1, int y1, int x2, int y2) {
+	m_pBoard->intervertJewels(x1, y1, x2, y2);
+	updateBoard();
+	UpdateAllViews(0);
+}
+
+/**
+* update color of the board according to previous changes, such as swap of jewels* 
+*/
+void CBejeweledDoc::updateBoard() {
+	m_color.clear();
+	for (int i = 0; i < m_tailleTab; i++) {
+		for (int j = 0; j < m_tailleTab; j++) {
+			m_color.push_back((*m_pBoard)[i][j].getColorJewels());
+		}
+	}
 }

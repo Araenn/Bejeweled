@@ -32,11 +32,23 @@ BEGIN_MESSAGE_MAP(CBejeweledView, CView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CBejeweledView::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
+	ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 // construction/destruction de CBejeweledView
 
-CBejeweledView::CBejeweledView() noexcept
+CBejeweledView::CBejeweledView() noexcept :
+	size(0),
+	height(0),
+	caseHeight(0),
+	caseWidth(0),
+	radius(0),
+	sizeBoard(0),
+	boardDraw(0),
+	firstClickX(-1),
+	firstClickY(-1),
+	secondClickX(0),
+	secondClickY(0)
 {
 	// TODO: ajoutez ici du code de construction
 
@@ -65,8 +77,19 @@ void CBejeweledView::OnDraw(CDC* pDC)
 		return;
 
 
-	CRect rect;
 	GetClientRect(rect);
+	sizeBoard = pDoc->m_tailleTab;
+	size = (rect.left + rect.right) / 3;
+	height = size - (rect.Height() + rect.Width()) / 5;
+
+	boardDraw = CRect(rect.left + size, rect.top + height, rect.right - size, rect.bottom - height);
+
+	caseWidth = boardDraw.Width() / sizeBoard; // width of each case
+	caseHeight = boardDraw.Height() / sizeBoard; // height of each case
+	radius = (caseWidth < caseHeight) ? caseWidth / 2 : caseHeight / 2;
+	radius *= 0.9; // decrease the radius by 20%
+
+
 
 	CPen mulberryPen(PS_SOLID, 1, RGB(74, 16, 12));
 	CPen* oldPen = pDC->SelectObject(&mulberryPen);
@@ -76,26 +99,18 @@ void CBejeweledView::OnDraw(CDC* pDC)
 
 	if (pDoc->flag == 1) {
 		for (int i = 0; i < pDoc->getTaille(); i++) {
-			
+
 			// dessine le debug board
 			pDC->TextOut(
-				(rect.Width() / 10), 
-				(rect.Height() / 10 + 22 * (i + 1)), 
-				pDoc->getChaine()[i], 
+				(rect.Width() / 10),
+				(rect.Height() / 10 + 22 * (i + 1)),
+				pDoc->getChaine()[i],
 				pDoc->getChaine()[i].GetLength()
 			);
 		}
 	}
 	else if (pDoc->flag == 2) {
-		
-		int size = (rect.left + rect.right) / 3;
-		int height = size - (rect.Height() + rect.Width()) / 5;
 
-		CRect boardDraw(rect.left + size, rect.top + height, rect.right - size, rect.bottom - height);
-		int caseWidth = boardDraw.Width() / pDoc->m_tailleTab; // width of each case
-		int caseHeight = boardDraw.Height() / pDoc->m_tailleTab; // height of each case
-		int radius = (caseWidth < caseHeight) ? caseWidth / 2 : caseHeight / 2;
-		radius *= 0.9; // decrease the radius by 20%
 
 		CPen blackPen(PS_SOLID, 1, RGB(0, 0, 0));
 		pDC->SelectObject(blackPen);
@@ -117,10 +132,12 @@ void CBejeweledView::OnDraw(CDC* pDC)
 				pDC->Ellipse(case_center_x - radius, case_center_y - radius, case_center_x + radius, case_center_y + radius);
 			}
 		}
+		
 
 		pDC->SelectObject(&oldBrush);
 		pDC->SelectObject(&oldPen);
 	}
+
 
 	// TODO: ajoutez ici le code de dessin pour les données natives
 }
@@ -189,3 +206,40 @@ CBejeweledDoc* CBejeweledView::GetDocument() const // la version non Debug est i
 // gestionnaires de messages de CBejeweledView
 
 
+
+
+void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: ajoutez ici le code de votre gestionnaire de messages et/ou les paramètres par défaut des appels
+	CBejeweledDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	CView::OnLButtonDown(nFlags, point);
+
+	if (firstClickX == -1) {
+		firstClickX = point.x;
+		firstClickY = point.y;
+		return;
+	}
+
+	int firstJewelX = (firstClickX - rect.left - size) / caseWidth;
+	int firstJewelY = (firstClickY - rect.top - height ) / caseHeight;
+
+	int secondClickX = point.x;
+	int secondClickY = point.y;
+
+
+	int secondJewelX = (secondClickX - rect.left - size )/ caseWidth;
+	int secondJewelY = (secondClickY - rect.top - height) / caseHeight;
+
+	pDoc->invertJewels(firstJewelX, firstJewelY, secondJewelX, secondJewelY);
+
+	firstClickX = -1;
+	firstClickY = -1;
+
+	RedrawWindow();
+
+	
+}

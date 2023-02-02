@@ -38,11 +38,12 @@ private:
 	};
 
 public:
+	CBoard();
 	CBoard(int size, int stone);
 	CString * debug_board();
 	int getBoardSize();
 	CJewels shuffleJewels(int stone);
-	void intervertJewels(int i, int j, CJewels p);
+	void intervertJewels(int i, int j, int x, int y);
 	vector<CJewels> operator[](int index);
 };
 

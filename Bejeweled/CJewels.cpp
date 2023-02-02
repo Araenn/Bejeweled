@@ -32,6 +32,6 @@ CString CJewels::getNameJewels() {
 	return this->m_name;
 }
 
-COLORREF CJewels::getColorJewels() {
+COLORREF CJewels::getColorJewels()  {
 	return this->m_color;
 }
