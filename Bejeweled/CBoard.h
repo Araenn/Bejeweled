@@ -47,6 +47,9 @@ public:
 	void intervertJewels(int i, int j, int x, int y);
 	vector<CJewels> operator[](int index);
 	BOOL isAdjacent(int x1, int y1, int x2, int y2);
+	BOOL isSameJewels(CJewels j1, CJewels j2);
+	BOOL formLine(int x, int y);
+	BOOL isMoveLegal(int x1, int y1, int x2, int y2);
 };
 
 

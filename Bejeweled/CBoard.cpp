@@ -58,6 +58,8 @@ CJewels CBoard::shuffleJewels(int stone) {
 }
 
 void CBoard::intervertJewels(int i, int j, int x, int y) {
+	
+	
 	CJewels temp = this->m_grid[i][j];
 	this->m_grid[i][j] = this->m_grid[x][y];
 	this->m_grid[x][y] = temp;
@@ -65,4 +67,48 @@ void CBoard::intervertJewels(int i, int j, int x, int y) {
 
 BOOL CBoard::isAdjacent(int x1, int y1, int x2, int y2) {
 	return ManhattanDistance(x1, y1, x2, y2) == 1;
+}
+
+BOOL CBoard::isSameJewels(CJewels j1, CJewels j2) {
+	return j1.getColorJewels() == j2.getColorJewels();
+}
+
+
+BOOL CBoard::formLine(int x, int y) {
+	int countLength = 1;
+	int xprime = x + 1;
+
+	while (xprime < m_size_grid  && isSameJewels(this->m_grid[xprime][y], this->m_grid[x][y])) {
+		xprime++;
+		countLength++;
+	}
+
+	xprime = x - 1;
+	while (xprime >= 0 && isSameJewels(this->m_grid[xprime][y], this->m_grid[x][y])) {
+		xprime--;
+		countLength++;
+	}
+
+	if (countLength >= 3) return TRUE;
+
+	int yprime = y + 1;
+	countLength = 1;
+	while (yprime < m_size_grid && isSameJewels(this->m_grid[x][yprime], this->m_grid[x][y])) {
+		yprime++;
+		countLength++;
+	}
+
+	yprime = y - 1;
+	while (yprime >= 0 && isSameJewels(this->m_grid[x][yprime], this->m_grid[x][y])) {
+		yprime--;
+		countLength++;
+	}
+
+	if (countLength >= 3) return TRUE;
+
+	return FALSE;
+}
+
+BOOL CBoard::isMoveLegal(int x1, int y1, int x2, int y2) {
+	return isAdjacent(x1, y1, x2, y2) && ( formLine(x2, y2) || formLine(x1, y1) );
 }

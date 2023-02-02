@@ -175,7 +175,6 @@ int CBejeweledDoc::getTaille() const {
 
 void CBejeweledDoc::OnTestDessinboard()
 {
-	m_color.clear();
 	this->flag = 2;
 	delete m_pBoard;
 	m_pBoard = new CBoard(m_tailleTab, m_stoneNumber);
