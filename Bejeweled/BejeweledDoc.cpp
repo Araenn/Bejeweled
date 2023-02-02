@@ -189,7 +189,7 @@ void CBejeweledDoc::OnTestDessinboard()
 void CBejeweledDoc::OnOptionsTailleduplateau()
 {
 	// TODO: ajoutez ici le code de votre gestionnaire de commande
-	DlgSizeBoard dlg;
+	CDlgSizeBoard dlg;
 	dlg.DoModal();
 	m_tailleTab = (int) dlg.m_sliderValue;
 	OnTestDessinboard();
@@ -199,7 +199,7 @@ void CBejeweledDoc::OnOptionsTailleduplateau()
 void CBejeweledDoc::OnOptionsNombredepierres()
 {
 	// TODO: ajoutez ici le code de votre gestionnaire de commande
-	DlgStoneNumber dlg;
+	CDlgStoneNumber dlg;
 	dlg.DoModal();
 	m_stoneNumber = dlg.m_sliderStoneNumber;
 	OnTestDessinboard();

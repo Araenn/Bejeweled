@@ -9,20 +9,20 @@
 
 // boîte de dialogue de DlgSizeBoard
 
-IMPLEMENT_DYNAMIC(DlgSizeBoard, CDialog)
+IMPLEMENT_DYNAMIC(CDlgSizeBoard, CDialog)
 
-DlgSizeBoard::DlgSizeBoard(CWnd* pParent /*=nullptr*/)
+CDlgSizeBoard::CDlgSizeBoard(CWnd* pParent /*=nullptr*/)
 	: CDialog(IDD_DIALOG_SIZEBOARD, pParent)
 	, m_sliderValue(8)
 {
 	
 }
 
-DlgSizeBoard::~DlgSizeBoard()
+CDlgSizeBoard::~CDlgSizeBoard()
 {
 }
 
-void DlgSizeBoard::DoDataExchange(CDataExchange* pDX)
+void CDlgSizeBoard::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Slider(pDX, IDC_SLIDER_SIZEBOARD, m_sliderValue);
@@ -30,7 +30,7 @@ void DlgSizeBoard::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(DlgSizeBoard, CDialog)
+BEGIN_MESSAGE_MAP(CDlgSizeBoard, CDialog)
 END_MESSAGE_MAP()
 
 // gestionnaires de messages de DlgSizeBoard

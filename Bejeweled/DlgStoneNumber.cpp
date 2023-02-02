@@ -9,20 +9,20 @@
 
 // boîte de dialogue de DlgStoneNumber
 
-IMPLEMENT_DYNAMIC(DlgStoneNumber, CDialog)
+IMPLEMENT_DYNAMIC(CDlgStoneNumber, CDialog)
 
-DlgStoneNumber::DlgStoneNumber(CWnd* pParent /*=nullptr*/)
+CDlgStoneNumber::CDlgStoneNumber(CWnd* pParent /*=nullptr*/)
 	: CDialog(IDD_DIALOG_STONENUMBER, pParent)
 	, m_sliderStoneNumber(6)
 {
 
 }
 
-DlgStoneNumber::~DlgStoneNumber()
+CDlgStoneNumber::~CDlgStoneNumber()
 {
 }
 
-void DlgStoneNumber::DoDataExchange(CDataExchange* pDX)
+void CDlgStoneNumber::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Slider(pDX, IDC_SLIDER_STONENUMBER, m_sliderStoneNumber);
@@ -31,7 +31,7 @@ void DlgStoneNumber::DoDataExchange(CDataExchange* pDX)
 
 
 
-BEGIN_MESSAGE_MAP(DlgStoneNumber, CDialog)
+BEGIN_MESSAGE_MAP(CDlgStoneNumber, CDialog)
 END_MESSAGE_MAP()
 
 

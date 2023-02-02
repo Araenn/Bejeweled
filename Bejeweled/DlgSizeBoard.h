@@ -3,13 +3,13 @@
 
 // boîte de dialogue de DlgSizeBoard
 
-class DlgSizeBoard : public CDialog
+class CDlgSizeBoard : public CDialog
 {
-	DECLARE_DYNAMIC(DlgSizeBoard)
+	DECLARE_DYNAMIC(CDlgSizeBoard)
 
 public:
-	DlgSizeBoard(CWnd* pParent = nullptr);   // constructeur standard
-	virtual ~DlgSizeBoard();
+	CDlgSizeBoard(CWnd* pParent = nullptr);   // constructeur standard
+	virtual ~CDlgSizeBoard();
 
 // Données de boîte de dialogue
 #ifdef AFX_DESIGN_TIME

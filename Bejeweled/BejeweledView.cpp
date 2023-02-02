@@ -38,16 +38,14 @@ END_MESSAGE_MAP()
 // construction/destruction de CBejeweledView
 
 CBejeweledView::CBejeweledView() noexcept :
-	size(0),
-	height(0),
-	caseHeight(0),
-	caseWidth(0),
-	radius(0),
-	sizeBoard(0),
-	firstClickX(-1),
-	firstClickY(-1),
-	secondClickX(0),
-	secondClickY(0)
+	m_sizeBoardDraw(0),
+	m_heightBoardDraw(0),
+	m_caseHeight(0),
+	m_caseWidth(0),
+	m_circleRadius(0),
+	m_sizeBoard(0),
+	m_firstClickX(-1),
+	m_firstClickY(-1)
 {
 	// TODO: ajoutez ici du code de construction
 
@@ -76,17 +74,17 @@ void CBejeweledView::OnDraw(CDC* pDC)
 		return;
 
 
-	GetClientRect(rect);
-	sizeBoard = pDoc->m_tailleTab;
-	size = (rect.left + rect.right) / 3;
-	height = size - (rect.Height() + rect.Width()) / 5;
+	GetClientRect(m_windowsRect);
+	m_sizeBoard = pDoc->m_tailleTab;
+	m_sizeBoardDraw = (m_windowsRect.left + m_windowsRect.right) / 3;
+	m_heightBoardDraw = m_sizeBoardDraw - (m_windowsRect.Height() + m_windowsRect.Width()) / 5;
 
-	boardDraw = CRect(rect.left + size, rect.top + height, rect.right - size, rect.bottom - height);
+	m_boardDraw = CRect(m_windowsRect.left + m_sizeBoardDraw, m_windowsRect.top + m_heightBoardDraw, m_windowsRect.right - m_sizeBoardDraw, m_windowsRect.bottom - m_heightBoardDraw);
 
-	caseWidth = boardDraw.Width() / sizeBoard; // width of each case
-	caseHeight = boardDraw.Height() / sizeBoard; // height of each case
-	radius = (caseWidth < caseHeight) ? caseWidth / 2 : caseHeight / 2;
-	radius *= 0.9; // decrease the radius by 20%
+	m_caseWidth = m_boardDraw.Width() / m_sizeBoard; // width of each case
+	m_caseHeight = m_boardDraw.Height() / m_sizeBoard; // m_heightBoardDraw of each case
+	m_circleRadius = (m_caseWidth < m_caseHeight) ? m_caseWidth / 2 : m_caseHeight / 2;
+	m_circleRadius *= 0.9; // decrease the m_circleRadius by 20%
 
 
 
@@ -94,15 +92,15 @@ void CBejeweledView::OnDraw(CDC* pDC)
 	CPen* oldPen = pDC->SelectObject(&mulberryPen);
 	CBrush mulberryBrush(RGB(32, 30, 32));
 	CBrush* oldBrush = pDC->SelectObject(&mulberryBrush);
-	pDC->Rectangle(rect);
+	pDC->Rectangle(m_windowsRect);
 
 	if (pDoc->flag == 1) {
 		for (int i = 0; i < pDoc->getTaille(); i++) {
 
 			// dessine le debug board
 			pDC->TextOut(
-				(rect.Width() / 10),
-				(rect.Height() / 10 + 22 * (i + 1)),
+				(m_windowsRect.Width() / 10),
+				(m_windowsRect.Height() / 10 + 22 * (i + 1)),
 				pDoc->getChaine()[i],
 				pDoc->getChaine()[i].GetLength()
 			);
@@ -113,12 +111,12 @@ void CBejeweledView::OnDraw(CDC* pDC)
 
 		CPen blackPen(PS_SOLID, 1, RGB(0, 0, 0));
 		pDC->SelectObject(blackPen);
-		pDC->Rectangle(boardDraw);
+		pDC->Rectangle(m_boardDraw);
 
 
 		CBrush blackBrush(RGB(224, 169, 109));
 		pDC->SelectObject(&blackBrush);
-		pDC->Rectangle(boardDraw);
+		pDC->Rectangle(m_boardDraw);
 
 
 		for (int i = 0; i < pDoc->m_tailleTab; i++) {
@@ -126,9 +124,9 @@ void CBejeweledView::OnDraw(CDC* pDC)
 				CBrush newBrush(pDoc->m_color[i * pDoc->m_tailleTab + j]);
 				pDC->SelectObject(newBrush);
 
-				int case_center_x = boardDraw.left + (i + 0.5) * caseWidth;
-				int case_center_y = boardDraw.top + (j + 0.5) * caseHeight;
-				pDC->Ellipse(case_center_x - radius, case_center_y - radius, case_center_x + radius, case_center_y + radius);
+				int case_center_x = m_boardDraw.left + (i + 0.5) * m_caseWidth;
+				int case_center_y = m_boardDraw.top + (j + 0.5) * m_caseHeight;
+				pDC->Ellipse(case_center_x - m_circleRadius, case_center_y - m_circleRadius, case_center_x + m_circleRadius, case_center_y + m_circleRadius);
 			}
 		}
 		
@@ -217,32 +215,32 @@ void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	CView::OnLButtonDown(nFlags, point);
 
-	if (firstClickX == -1) {
-		firstClickX = point.x;
-		firstClickY = point.y;
+	if (m_firstClickX == -1) {
+		m_firstClickX = point.x;
+		m_firstClickY = point.y;
 		return;
 	}
 
-	int firstJewelX = (firstClickX - rect.left - size) / caseWidth;
-	int firstJewelY = (firstClickY - rect.top - height ) / caseHeight;
+	int firstJewelX = (m_firstClickX - m_windowsRect.left - m_sizeBoardDraw) / m_caseWidth;
+	int firstJewelY = (m_firstClickY - m_windowsRect.top - m_heightBoardDraw ) / m_caseHeight;
 
 	int secondClickX = point.x;
 	int secondClickY = point.y;
 
 
-	int secondJewelX = (secondClickX - rect.left - size )/ caseWidth;
-	int secondJewelY = (secondClickY - rect.top - height) / caseHeight;
+	int secondJewelX = (secondClickX - m_windowsRect.left - m_sizeBoardDraw )/ m_caseWidth;
+	int secondJewelY = (secondClickY - m_windowsRect.top - m_heightBoardDraw) / m_caseHeight;
 
 	if (!pDoc->m_pBoard->isAdjacent(firstJewelX, firstJewelY, secondJewelX, secondJewelY)) {
-		firstClickX = -1;
-		firstClickY = -1;
+		m_firstClickX = -1;
+		m_firstClickY = -1;
 		return;
 	}
 
 	pDoc->invertJewels(firstJewelX, firstJewelY, secondJewelX, secondJewelY);
 
-	firstClickX = -1;
-	firstClickY = -1;
+	m_firstClickX = -1;
+	m_firstClickY = -1;
 
 	RedrawWindow();
 

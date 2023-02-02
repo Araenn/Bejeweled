@@ -16,10 +16,10 @@ using namespace std;
 class CBoard
 {
 private:
-	std::vector<std::vector<CJewels>> grid;
+	std::vector<std::vector<CJewels>> m_grid;
 	int m_size_grid;	
 	int m_stoneNumber;
-	vector<CJewels> listJewels = {
+	vector<CJewels> m_listJewels = {
 		CJewels::AMETHYST,
 		CJewels::DIAMOND,
 		CJewels::EMERALD,

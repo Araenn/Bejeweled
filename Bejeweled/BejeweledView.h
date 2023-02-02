@@ -47,18 +47,16 @@ protected:
 public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 
-	int size;
-	int height;
-	int caseWidth;
-	int caseHeight;
-	int radius;
-	CRect rect;
-	CRect boardDraw;
-	int sizeBoard;
-	int firstClickX;
-	int firstClickY;
-	int secondClickX;
-	int secondClickY;
+	int m_sizeBoardDraw;
+	int m_heightBoardDraw;
+	int m_caseWidth;
+	int m_caseHeight;
+	int m_circleRadius;
+	CRect m_windowsRect;
+	CRect m_boardDraw;
+	int m_sizeBoard;
+	int m_firstClickX;
+	int m_firstClickY;
 };
 
 #ifndef _DEBUG  // version Debug dans BejeweledView.cpp

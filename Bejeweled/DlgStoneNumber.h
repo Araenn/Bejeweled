@@ -3,13 +3,13 @@
 
 // boîte de dialogue de DlgStoneNumber
 
-class DlgStoneNumber : public CDialog
+class CDlgStoneNumber : public CDialog
 {
-	DECLARE_DYNAMIC(DlgStoneNumber)
+	DECLARE_DYNAMIC(CDlgStoneNumber)
 
 public:
-	DlgStoneNumber(CWnd* pParent = nullptr);   // constructeur standard
-	virtual ~DlgStoneNumber();
+	CDlgStoneNumber(CWnd* pParent = nullptr);   // constructeur standard
+	virtual ~CDlgStoneNumber();
 
 // Données de boîte de dialogue
 #ifdef AFX_DESIGN_TIME
