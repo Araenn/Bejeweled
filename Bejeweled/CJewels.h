@@ -24,6 +24,7 @@ constexpr COLORREF CORAIL RGB(231, 62, 1);
 constexpr COLORREF RED_FIRE RGB(150, 73, 1);
 constexpr COLORREF DARK_BLUE RGB(15, 5, 107);
 constexpr COLORREF GREEN_CYAN RGB(9, 189, 140);
+constexpr COLORREF BLACK RGB(0, 0, 0);
 
 class CJewels
 {
@@ -36,6 +37,8 @@ public:
 	~CJewels();
 	COLORREF getColorJewels() ;
 	CString getNameJewels();
+
+	static const CJewels DEFAULT;
 
 	static const CJewels SAPPHIRE;
 	static const CJewels RUBY;

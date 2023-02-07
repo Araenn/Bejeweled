@@ -47,14 +47,13 @@ protected:
 public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 
-	int m_widthBoardDrawDraw;
-	int m_heightBoardDraw;
-	int m_caseWidth;
-	int m_caseHeight;
+	int m_widthBoardDraw; // largeur en pixel du plateau de jeu
+	int m_heightBoardDraw; // hauteur en pixel du plateau de jeu
+	int m_caseWidth; // largeur en pixel d'une case du plateau de jeu
+	int m_caseHeight; // hauteur en pixel d'une case du plateau de jeu
 	int m_circleRadius;
 	CRect m_windowsRect;
 	CRect m_boardDraw;
-	int m_widthBoardDraw;
 	int m_firstClickX;
 	int m_firstClickY;
 };

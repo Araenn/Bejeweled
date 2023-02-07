@@ -10,6 +10,7 @@
 #include "CJewels.h"
 #include <stdlib.h>
 #include "CMathUtils.h"
+#include "Log.h"
 
 using namespace std;
 
@@ -43,13 +44,23 @@ public:
 	CBoard(int size, int stone);
 	CString * debug_board();
 	int getBoardSize();
-	CJewels shuffleJewels(int stone);
+	void deleteAllCombo();
+	CJewels shuffleJewels();
 	void intervertJewels(int i, int j, int x, int y);
 	vector<CJewels> operator[](int index);
 	BOOL isAdjacent(int x1, int y1, int x2, int y2);
 	BOOL isSameJewels(CJewels j1, CJewels j2);
-	BOOL formLine(int x, int y);
+	BOOL isCombo(int x, int y);
+	vector<vector<int>> getComboJewels(int x, int y, vector<vector<int>>& flagMap);
 	BOOL isMoveLegal(int x1, int y1, int x2, int y2);
+	void disappearingJewels(vector<vector<int>>& jewelsCoords);
+	vector<vector<int>> getComboJewelsOnSwap(int x1, int y1, int x2, int y2);
+	void applyGravity();
+	void applyGravityOnCol(int col);
+	void CBoard::makeFallingJewels();
+	vector<vector<int>> getAllComboJewels();
+
+	std::vector<std::vector<int>> jewelsFormLine;
 };
 
 

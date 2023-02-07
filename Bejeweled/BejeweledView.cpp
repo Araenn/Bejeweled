@@ -14,6 +14,12 @@
 #include "BejeweledView.h"
 #include "CBoard.h"
 #include "CJewels.h"
+#include "Log.h"
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -38,12 +44,11 @@ END_MESSAGE_MAP()
 // construction/destruction de CBejeweledView
 
 CBejeweledView::CBejeweledView() noexcept :
-	m_widthBoardDrawDraw(0),
+	m_widthBoardDraw(0),
 	m_heightBoardDraw(0),
 	m_caseHeight(0),
 	m_caseWidth(0),
 	m_circleRadius(0),
-	m_widthBoardDraw(0),
 	m_firstClickX(-1),
 	m_firstClickY(-1)
 {
@@ -75,16 +80,15 @@ void CBejeweledView::OnDraw(CDC* pDC)
 
 
 	GetClientRect(m_windowsRect);
-	m_widthBoardDraw = pDoc->m_tailleTab;
-	m_widthBoardDrawDraw = (m_windowsRect.left + m_windowsRect.right) / 3;
-	m_heightBoardDraw = m_widthBoardDrawDraw - (m_windowsRect.Height() + m_windowsRect.Width()) / 5;
+	m_widthBoardDraw = (m_windowsRect.left + m_windowsRect.right) / 3;
+	m_heightBoardDraw = m_widthBoardDraw - (m_windowsRect.Height() + m_windowsRect.Width()) / 5;
 
-	m_boardDraw = CRect(m_windowsRect.left + m_widthBoardDrawDraw, m_windowsRect.top + m_heightBoardDraw, m_windowsRect.right - m_widthBoardDrawDraw, m_windowsRect.bottom - m_heightBoardDraw);
+	m_boardDraw = CRect(m_windowsRect.left + m_widthBoardDraw, m_windowsRect.top + m_heightBoardDraw, m_windowsRect.right - m_widthBoardDraw, m_windowsRect.bottom - m_heightBoardDraw);
 
-	m_caseWidth = m_boardDraw.Width() / m_widthBoardDraw; // width of each case
-	m_caseHeight = m_boardDraw.Height() / m_widthBoardDraw; // m_heightBoardDraw of each case
+	m_caseWidth = m_boardDraw.Width() / pDoc->m_pBoard->getBoardSize(); // width of each case
+	m_caseHeight = m_boardDraw.Height() / pDoc->m_pBoard->getBoardSize(); // m_heightBoardDraw of each case
 	m_circleRadius = (m_caseWidth < m_caseHeight) ? m_caseWidth / 2 : m_caseHeight / 2;
-	m_circleRadius *= 0.9; // decrease the m_circleRadius by 20%
+	m_circleRadius = (int) (m_circleRadius * 0.9); // decrease the m_circleRadius by 20%
 
 
 
@@ -119,13 +123,13 @@ void CBejeweledView::OnDraw(CDC* pDC)
 		pDC->Rectangle(m_boardDraw);
 
 
-		for (int i = 0; i < pDoc->m_tailleTab; i++) {
-			for (int j = 0; j < pDoc->m_tailleTab; j++) {
-				CBrush newBrush(pDoc->m_color[i * pDoc->m_tailleTab + j]);
+		for (int line = 0; line < pDoc->m_tailleTab; line++) {
+			for (int col = 0; col < pDoc->m_tailleTab; col++) {
+				CBrush newBrush(pDoc->m_color[line * pDoc->m_tailleTab + col]);
 				pDC->SelectObject(newBrush);
 
-				int case_center_x = m_boardDraw.left + (i + 0.5) * m_caseWidth;
-				int case_center_y = m_boardDraw.top + (j + 0.5) * m_caseHeight;
+				int case_center_x = (int) (m_boardDraw.left + (col + 0.5) * m_caseWidth);
+				int case_center_y = (int) (m_boardDraw.top + (line + 0.5) * m_caseHeight);
 				pDC->Ellipse(case_center_x - m_circleRadius, case_center_y - m_circleRadius, case_center_x + m_circleRadius, case_center_y + m_circleRadius);
 			}
 		}
@@ -216,10 +220,10 @@ void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
 	CView::OnLButtonDown(nFlags, point);
 
 	if (m_firstClickX == -1) {
-		int firstJewelX = (point.x - m_windowsRect.left - m_widthBoardDrawDraw) / m_caseWidth;
-		int firstJewelY = (point.y - m_windowsRect.top - m_heightBoardDraw) / m_caseHeight;
-		if (firstJewelX >= 0 && firstJewelX < m_widthBoardDraw &&
-			firstJewelY >= 0 && firstJewelY < m_widthBoardDraw) {
+		int firstJewelY = (point.x - m_boardDraw.left) / m_caseWidth;
+		int firstJewelX = (point.y - m_boardDraw.top) / m_caseHeight;
+		if (firstJewelX >= 0 && firstJewelX < pDoc->m_pBoard->getBoardSize() &&
+			firstJewelY >= 0 && firstJewelY < pDoc->m_pBoard->getBoardSize()) {
 			m_firstClickX = point.x;
 			m_firstClickY = point.y;
 		}
@@ -227,22 +231,22 @@ void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
 		return;
 	}
 
-	int firstJewelX = (m_firstClickX - m_windowsRect.left - m_widthBoardDrawDraw) / m_caseWidth;
-	int firstJewelY = (m_firstClickY - m_windowsRect.top - m_heightBoardDraw ) / m_caseHeight;
+	int firstJewelY = (m_firstClickX - m_boardDraw.left) / m_caseWidth;
+	int firstJewelX = (m_firstClickY - m_boardDraw.top) / m_caseHeight;
 
 	int secondClickX = point.x;
 	int secondClickY = point.y;
 
 
-	int secondJewelX = (secondClickX - m_windowsRect.left - m_widthBoardDrawDraw )/ m_caseWidth;
-	int secondJewelY = (secondClickY - m_windowsRect.top - m_heightBoardDraw) / m_caseHeight;
+	int secondJewelY = (secondClickX - m_boardDraw.left) / m_caseWidth;
+	int secondJewelX = (secondClickY - m_boardDraw.top) / m_caseHeight;
 
-	if (secondJewelX >= 0 && secondJewelX < m_widthBoardDraw &&
-		secondJewelY >= 0 && secondJewelY < m_widthBoardDraw) {
+	if (secondJewelX >= 0 && secondJewelX < pDoc->m_pBoard->getBoardSize() &&
+		secondJewelY >= 0 && secondJewelY < pDoc->m_pBoard->getBoardSize()) {
 
 		pDoc->invertJewels(firstJewelX, firstJewelY, secondJewelX, secondJewelY);
 
-		if ((!pDoc->m_pBoard->isMoveLegal(firstJewelX, firstJewelY, secondJewelX, secondJewelY))) {
+		if (!pDoc->m_pBoard->isMoveLegal(firstJewelX, firstJewelY, secondJewelX, secondJewelY)) {
 			pDoc->invertJewels(firstJewelX, firstJewelY, secondJewelX, secondJewelY);
 			m_firstClickX = -1;
 			m_firstClickY = -1;
@@ -250,10 +254,30 @@ void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
 		}
 
 
+		vector<vector<int>> comboJewels = pDoc->m_pBoard->getComboJewelsOnSwap(firstJewelX, firstJewelY, secondJewelX, secondJewelY);
+		pDoc->m_pBoard->disappearingJewels(comboJewels);
+		pDoc->m_pBoard->applyGravity();
+		pDoc->m_pBoard->makeFallingJewels();
+		pDoc->addScore(comboJewels.size() * comboJewels.size());
+
+		comboJewels = pDoc->m_pBoard->getAllComboJewels();
+		while (comboJewels.size() != 0) {
+			pDoc->addScore(comboJewels.size() * comboJewels.size());
+			pDoc->m_pBoard->disappearingJewels(comboJewels);
+			pDoc->m_pBoard->applyGravity();
+			pDoc->m_pBoard->makeFallingJewels();
+
+			comboJewels = pDoc->m_pBoard->getAllComboJewels();
+		}
+
+		get_log_file() << "score: " << pDoc->getScore() << std::endl;
+
 		m_firstClickX = -1;
 		m_firstClickY = -1;
 
-		RedrawWindow();
+		pDoc->updateView();
+
+		//RedrawWindow();
 	}
 	
 	m_firstClickX = -1;

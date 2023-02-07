@@ -5,6 +5,9 @@
 #include "pch.h"
 #include "framework.h"
 #include "Bejeweled.h"
+#include "Log.h"
+#include <stdlib.h>
+#include <time.h>
 
 #include "MainFrm.h"
 
@@ -44,6 +47,7 @@ CMainFrame::CMainFrame() noexcept
 
 CMainFrame::~CMainFrame()
 {
+	closeFile();
 }
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -144,6 +148,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	lstBasicCommands.AddTail(ID_VIEW_APPLOOK_OFF_2007_AQUA);
 
 	CMFCToolBar::SetBasicCommands(lstBasicCommands);
+
+	initFile((CString) "log.txt");
+	srand(time(NULL));
 
 	return 0;
 }

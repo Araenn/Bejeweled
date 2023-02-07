@@ -52,6 +52,7 @@ public:
 	int m_widthCase;
 	int m_heightCase;
 	int flag;
+	int score;
 	std::vector<COLORREF> m_color;
 	CBoard* m_pBoard;
 
@@ -66,4 +67,7 @@ public:
 	int getTaille() const;
 	void invertJewels(int x1, int y1, int x2, int y2);
 	void updateBoard();
+	void updateView();
+	int getScore();
+	void addScore(int score);
 };

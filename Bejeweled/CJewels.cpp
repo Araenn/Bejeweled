@@ -17,6 +17,7 @@ const CJewels CJewels::SANGUINE = CJewels(_T("Aqua"), CORAIL);
 const CJewels CJewels::SUNSTONE = CJewels(_T("Aqua"), RED_FIRE);
 const CJewels CJewels::TOURMALINE = CJewels(_T("Aqua"), DARK_BLUE);
 const CJewels CJewels::TURQUOISE = CJewels(_T("Aqua"), GREEN_CYAN);
+const CJewels CJewels::DEFAULT = CJewels(_T("Default"), BLACK);
 
 
 CJewels::CJewels(CString name, COLORREF m_color) {

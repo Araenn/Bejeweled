@@ -41,7 +41,8 @@ CBejeweledDoc::CBejeweledDoc() noexcept :
 	m_stoneNumber(6),
 	m_widthCase(0),
 	m_heightCase(0),
-	flag(0)
+	flag(0),
+	score(0)
 {
 	// TODO: ajoutez ici le code d'une construction unique
 	m_pBoard = new CBoard(m_tailleTab, m_stoneNumber);
@@ -158,8 +159,11 @@ void CBejeweledDoc::Dump(CDumpContext& dc) const
 void CBejeweledDoc::OnTestAffichagegrid()
 {
 	this->flag = 1;
-	delete m_pBoard;
-	m_pBoard = new CBoard(m_tailleTab, m_stoneNumber);
+
+	if (m_pBoard == NULL) {
+		m_pBoard = new CBoard(m_tailleTab, m_stoneNumber);
+	}
+
 	if (p_valueTab != NULL) delete[] p_valueTab;
 	p_valueTab = m_pBoard->debug_board();
 	UpdateAllViews(0);
@@ -183,7 +187,6 @@ void CBejeweledDoc::OnTestDessinboard()
 
 	// TODO: ajoutez ici le code de votre gestionnaire de commande
 }
-
 
 void CBejeweledDoc::OnOptionsTailleduplateau()
 {
@@ -209,6 +212,9 @@ void CBejeweledDoc::OnOptionsNombredepierres()
 */
 void CBejeweledDoc::invertJewels(int x1, int y1, int x2, int y2) {
 	m_pBoard->intervertJewels(x1, y1, x2, y2);
+}
+
+void CBejeweledDoc::updateView() {
 	updateBoard();
 	UpdateAllViews(0);
 }
@@ -225,4 +231,10 @@ void CBejeweledDoc::updateBoard() {
 	}
 }
 
+int CBejeweledDoc::getScore() {
+	return this->score;
+}
 
+void CBejeweledDoc::addScore(int score) {
+	this->score += score;
+}
