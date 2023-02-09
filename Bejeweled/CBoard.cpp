@@ -17,7 +17,7 @@ CBoard::CBoard() {
 		this->m_grid.push_back(line);
 	}
 	this->m_size_grid = size;
-
+	
 	deleteAllCombo();
 }
 
@@ -41,23 +41,22 @@ CBoard::CBoard(int size = 8, int stone = 6) {
 		this->m_grid.push_back(line);
 	}
 	this->m_size_grid = size;
-
 	deleteAllCombo();
 }
 
-vector<CJewels> CBoard::operator[](int index) {
+vector<CJewels>& CBoard::operator[](int index) {
 	return this->m_grid[index];
 }
 
 /**
 	Supprime tous les combo existant du plateau
 */
-void CBoard::deleteAllCombo() {
+void CBoard::deleteAllCombo() {//check ici
 	vector<vector<int>> comboJewels = getAllComboJewels();
 	while (comboJewels.size() != 0) {
 		disappearingJewels(comboJewels);
 		applyGravity();
-		makeFallingJewels();
+		addJewels(makeFallingJewels());
 		comboJewels = getAllComboJewels();
 	}
 }
@@ -361,10 +360,39 @@ void CBoard::applyGravity() {
  *
  *      @param [in] stone 
  */
-void CBoard::makeFallingJewels() {
+std::vector<std::vector<CJewels>> CBoard::makeFallingJewels() {
+	std::vector<std::vector<CJewels>> T;
 	for (int col = 0; col < m_size_grid; col++) {
+		std::vector<CJewels> t;
 		for (int line = 0; line < m_size_grid && isSameJewels(m_grid[line][col], CJewels::DEFAULT); line++) {
-			m_grid[line][col] = shuffleJewels();
+			t.push_back(shuffleJewels());
 		}
+		T.push_back(t);
+	}
+	return T;
+}
+
+void CBoard::addJewels(std::vector<std::vector<CJewels>>& T) {
+	unsigned int maxDepth = 0;
+	for (unsigned int i = 0; i < T.size(); i++) {
+		if (T[i].size() > maxDepth) {
+			maxDepth = T[i].size();
+		}
+	}
+
+	for (unsigned int i = 0; i < maxDepth; i++) {
+		fallOneTime(T);
+	}
+}
+
+void CBoard::fallOneTime(std::vector<std::vector<CJewels>>& T) {
+	for (int i = 0; i < T.size(); i++) {
+		std::vector<CJewels> &t = T[i];
+		if (t.size() == 0) {
+			continue;
+		}
+
+		this->m_grid[t.size() - 1][i] = t[0];
+		t.erase(t.begin());
 	}
 }

@@ -189,6 +189,7 @@
     <ClInclude Include="CBoard.h" />
     <ClInclude Include="CJewels.h" />
     <ClInclude Include="CMathUtils.h" />
+    <ClInclude Include="CTimes.h" />
     <ClInclude Include="DlgSizeBoard.h" />
     <ClInclude Include="DlgStoneNumber.h" />
     <ClInclude Include="framework.h" />

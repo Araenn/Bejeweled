@@ -78,7 +78,6 @@ void CBejeweledView::OnDraw(CDC* pDC)
 	if (!pDoc)
 		return;
 
-
 	GetClientRect(m_windowsRect);
 	m_widthBoardDraw = (m_windowsRect.left + m_windowsRect.right) / 3;
 	m_heightBoardDraw = m_widthBoardDraw - (m_windowsRect.Height() + m_windowsRect.Width()) / 5;
@@ -133,6 +132,8 @@ void CBejeweledView::OnDraw(CDC* pDC)
 				pDC->Ellipse(case_center_x - m_circleRadius, case_center_y - m_circleRadius, case_center_x + m_circleRadius, case_center_y + m_circleRadius);
 			}
 		}
+
+
 		
 
 		pDC->SelectObject(&oldBrush);
@@ -257,7 +258,9 @@ void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
 		vector<vector<int>> comboJewels = pDoc->m_pBoard->getComboJewelsOnSwap(firstJewelX, firstJewelY, secondJewelX, secondJewelY);
 		pDoc->m_pBoard->disappearingJewels(comboJewels);
 		pDoc->m_pBoard->applyGravity();
-		pDoc->m_pBoard->makeFallingJewels();
+		pDoc->updateView();
+		fallingAllJewels(pDoc);
+		
 		pDoc->addScore(comboJewels.size() * comboJewels.size());
 
 		comboJewels = pDoc->m_pBoard->getAllComboJewels();
@@ -265,8 +268,8 @@ void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->addScore(comboJewels.size() * comboJewels.size());
 			pDoc->m_pBoard->disappearingJewels(comboJewels);
 			pDoc->m_pBoard->applyGravity();
-			pDoc->m_pBoard->makeFallingJewels();
-
+			pDoc->updateView();
+			fallingAllJewels(pDoc);
 			comboJewels = pDoc->m_pBoard->getAllComboJewels();
 		}
 
@@ -276,11 +279,25 @@ void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
 		m_firstClickY = -1;
 
 		pDoc->updateView();
-
 		//RedrawWindow();
 	}
 	
 	m_firstClickX = -1;
 	m_firstClickY = -1;
 	
+}
+
+void CBejeweledView::fallingAllJewels(CBejeweledDoc* pDoc) {
+	std::vector<std::vector<CJewels>> &T = pDoc->m_pBoard->makeFallingJewels();
+	unsigned int maxDepth = 0;
+	for (unsigned int i = 0; i < T.size(); i++) {
+		if (T[i].size() > maxDepth) {
+			maxDepth = T[i].size();
+		}
+	}
+
+	for (unsigned int i = 0; i < maxDepth; i++) {
+		pDoc->fallOneTime(T);
+		pDoc->updateView();
+	}
 }

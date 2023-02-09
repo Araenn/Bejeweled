@@ -1,7 +1,7 @@
 
 // BejeweledView.h : interface de la classe CBejeweledView
 //
-
+#include "BejeweledDoc.h"
 #pragma once
 
 
@@ -46,6 +46,7 @@ protected:
 
 public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	void fallingAllJewels(CBejeweledDoc* pDoc);
 
 	int m_widthBoardDraw; // largeur en pixel du plateau de jeu
 	int m_heightBoardDraw; // hauteur en pixel du plateau de jeu
