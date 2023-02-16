@@ -39,6 +39,7 @@ BEGIN_MESSAGE_MAP(CBejeweledView, CView)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 // construction/destruction de CBejeweledView
@@ -50,15 +51,27 @@ CBejeweledView::CBejeweledView() noexcept :
 	m_caseWidth(0),
 	m_circleRadius(0),
 	m_firstClickX(-1),
-	m_firstClickY(-1)
+	m_firstClickY(-1),
+	m_bAnimating(false),
+	m_nAnimStep(0)
 {
 	// TODO: ajoutez ici du code de construction
-
 }
 
 CBejeweledView::~CBejeweledView()
 {
 
+}
+
+int CBejeweledView::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CWnd::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	// TODO:  Add your specialized creation code here
+	SetTimer(1, 50, NULL);
+
+	return 0;
 }
 
 BOOL CBejeweledView::PreCreateWindow(CREATESTRUCT& cs)
@@ -90,12 +103,16 @@ void CBejeweledView::OnDraw(CDC* pDC)
 	m_circleRadius = (int) (m_circleRadius * 0.9); // decrease the m_circleRadius by 20%
 
 
+	
+	CPen defaultPen(PS_SOLID, 1, BROWN);
+	CPen* oldPen = pDC->SelectObject(&defaultPen);
 
-	CPen mulberryPen(PS_SOLID, 1, RGB(74, 16, 12));
-	CPen* oldPen = pDC->SelectObject(&mulberryPen);
+	CPen mulberryPen(PS_SOLID, 1, RGB(32, 30, 32));
+	pDC->SelectObject(mulberryPen);
 	CBrush mulberryBrush(RGB(32, 30, 32));
 	CBrush* oldBrush = pDC->SelectObject(&mulberryBrush);
 	pDC->Rectangle(m_windowsRect);
+
 
 	if (pDoc->flag == 1) {
 		for (int i = 0; i < pDoc->getTaille(); i++) {
@@ -111,37 +128,50 @@ void CBejeweledView::OnDraw(CDC* pDC)
 	}
 	else if (pDoc->flag == 2) {
 
-
-		CPen blackPen(PS_SOLID, 1, RGB(0, 0, 0));
-		pDC->SelectObject(blackPen);
-		pDC->Rectangle(m_boardDraw);
-
-
-		CBrush blackBrush(RGB(224, 169, 109));
-		pDC->SelectObject(&blackBrush);
+		CBrush brownBrush(RGB(224, 169, 109));
+		pDC->SelectObject(&brownBrush);
 		pDC->Rectangle(m_boardDraw);
 
 
 		for (int line = 0; line < pDoc->m_tailleTab; line++) {
 			for (int col = 0; col < pDoc->m_tailleTab; col++) {
-				CBrush newBrush(pDoc->m_color[line * pDoc->m_tailleTab + col]);
-				pDC->SelectObject(newBrush);
+				const CJewels& test = pDoc->m_pBoard->get(line, col);
+				
+					CPen newPen(PS_SOLID, 1, pDoc->m_color[line * pDoc->m_tailleTab + col]);
+					pDC->SelectObject(newPen);
+					CBrush newBrush(pDoc->m_color[line * pDoc->m_tailleTab + col]);
+					pDC->SelectObject(newBrush);
 
-				int case_center_x = (int) (m_boardDraw.left + (col + 0.5) * m_caseWidth);
-				int case_center_y = (int) (m_boardDraw.top + (line + 0.5) * m_caseHeight);
-				pDC->Ellipse(case_center_x - m_circleRadius, case_center_y - m_circleRadius, case_center_x + m_circleRadius, case_center_y + m_circleRadius);
+					int case_center_x = (int)(m_boardDraw.left + (col + 0.5) * m_caseWidth);
+					int case_center_y = (int)(m_boardDraw.top + (line + 0.5) * m_caseHeight);
+					pDC->Ellipse(case_center_x - m_circleRadius, case_center_y - m_circleRadius, case_center_x + m_circleRadius, case_center_y + m_circleRadius);
+				
 			}
 		}
+		drawFallingJewels();
+		StartAnimation();
 
 
-		
 
 		pDC->SelectObject(&oldBrush);
 		pDC->SelectObject(&oldPen);
 	}
+}
 
 
 	// TODO: ajoutez ici le code de dessin pour les données natives
+
+void CBejeweledView::StartAnimation()
+{
+	m_bAnimating = true;
+	m_nAnimStep = 0;
+	SetTimer(1, 1000, NULL);
+}
+
+void CBejeweledView::StopAnimation()
+{
+	m_bAnimating = false;
+	KillTimer(1);
 }
 
 
@@ -218,6 +248,7 @@ void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
 	if (!pDoc)
 		return;
 
+	CDC* pDC = GetDC();
 	CView::OnLButtonDown(nFlags, point);
 
 	if (m_firstClickX == -1) {
@@ -255,23 +286,9 @@ void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
 		}
 
 
-		vector<vector<int>> comboJewels = pDoc->m_pBoard->getComboJewelsOnSwap(firstJewelX, firstJewelY, secondJewelX, secondJewelY);
-		pDoc->m_pBoard->disappearingJewels(comboJewels);
-		pDoc->m_pBoard->applyGravity();
-		pDoc->updateView();
-		fallingAllJewels(pDoc);
+		comboJewels = pDoc->m_pBoard->getComboJewelsOnSwap(firstJewelX, firstJewelY, secondJewelX, secondJewelY);
+		StartAnimation();
 		
-		pDoc->addScore(comboJewels.size() * comboJewels.size());
-
-		comboJewels = pDoc->m_pBoard->getAllComboJewels();
-		while (comboJewels.size() != 0) {
-			pDoc->addScore(comboJewels.size() * comboJewels.size());
-			pDoc->m_pBoard->disappearingJewels(comboJewels);
-			pDoc->m_pBoard->applyGravity();
-			pDoc->updateView();
-			fallingAllJewels(pDoc);
-			comboJewels = pDoc->m_pBoard->getAllComboJewels();
-		}
 
 		get_log_file() << "score: " << pDoc->getScore() << std::endl;
 
@@ -279,7 +296,7 @@ void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
 		m_firstClickY = -1;
 
 		pDoc->updateView();
-		//RedrawWindow();
+		StopAnimation();
 	}
 	
 	m_firstClickX = -1;
@@ -287,7 +304,12 @@ void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
 	
 }
 
-void CBejeweledView::fallingAllJewels(CBejeweledDoc* pDoc) {
+void CBejeweledView::fallingAllJewels() {
+	CBejeweledDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
 	std::vector<std::vector<CJewels>> &T = pDoc->m_pBoard->makeFallingJewels();
 	unsigned int maxDepth = 0;
 	for (unsigned int i = 0; i < T.size(); i++) {
@@ -298,6 +320,102 @@ void CBejeweledView::fallingAllJewels(CBejeweledDoc* pDoc) {
 
 	for (unsigned int i = 0; i < maxDepth; i++) {
 		pDoc->fallOneTime(T);
-		pDoc->updateView();
+		StartAnimation();
+	}
+}
+
+
+void CBejeweledView::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: ajoutez ici le code de votre gestionnaire de messages et/ou les paramètres par défaut des appels
+	CBejeweledDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+	CDC* pDC = GetDC();
+		
+	//dessiner en couleur fond ceux qui sortent directement de makeJewelsFalling, puis dessiner avec cette fonction en faisant descendre PROGRESSIVEMENT les pierres
+	pDoc->m_pBoard->disappearingJewels(comboJewels);
+	drawDefault();
+	pDoc->m_pBoard->applyGravity();
+	drawFallingJewels();
+	pDoc->updateView();
+	fallingAllJewels();
+	pDoc->addScore(comboJewels.size() * comboJewels.size());
+
+	comboJewels = pDoc->m_pBoard->getAllComboJewels();
+	while (comboJewels.size() != 0) {
+		pDoc->addScore(comboJewels.size() * comboJewels.size());
+
+		pDoc->m_pBoard->disappearingJewels(comboJewels);
+		drawDefault();
+		pDoc->m_pBoard->applyGravity();
+		drawFallingJewels();
+		fallingAllJewels();
+		comboJewels = pDoc->m_pBoard->getAllComboJewels();
+	}
+	CView::OnTimer(nIDEvent);
+}
+
+void CBejeweledView::drawDefault() {
+	CBejeweledDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+	CDC* pDC = GetDC();
+
+	for (int line = 0; line < pDoc->m_tailleTab; line++) {
+		for (int col = 0; col < pDoc->m_tailleTab; col++) {
+			const CJewels& test = pDoc->m_pBoard->get(line, col);
+			if (pDoc->m_pBoard->isJewelsDefault(test)) {
+				CPen defaultPen(PS_SOLID, 1, BROWN);
+				CPen *oldPen = pDC->SelectObject(&defaultPen);
+				CBrush defaultBrush(BROWN);
+				CBrush *oldBrush = pDC->SelectObject(&defaultBrush);
+
+				int case_center_x = (int)(m_boardDraw.left + (col + 0.5) * m_caseWidth);
+				int case_center_y = (int)(m_boardDraw.top + (line + 0.5) * m_caseHeight);
+				pDC->Ellipse(case_center_x - m_circleRadius, case_center_y - m_circleRadius, case_center_x + m_circleRadius, case_center_y + m_circleRadius);
+
+				pDC->SelectObject(&oldPen);
+				pDC->SelectObject(&oldBrush);
+				ReleaseDC(pDC);
+			}
+		}
+	}
+	
+}
+
+void CBejeweledView::drawFallingJewels() {
+	CBejeweledDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+	CDC* pDC = GetDC();
+
+	std::vector<std::vector<CJewels>>& T = pDoc->m_pBoard->T;
+	if (T.size() != 0) {
+		for (int i = 0; i < T.size(); i++) {
+			std::vector<CJewels>& t = T[i];
+
+			get_log_file() << "T(i) = " << T[i].size() << std::endl;
+			if (t.size() == 0) {
+				continue;
+			}
+
+			CPen newPen(PS_SOLID, 1, t[0].getColorJewels());
+			CPen* oldPen = pDC->SelectObject(&newPen);
+			CBrush newBrush(t[0].getColorJewels());
+			CBrush* oldBrush = pDC->SelectObject(&newBrush);
+
+			int case_center_x = (int)(m_boardDraw.left + (i + 0.5) * m_caseWidth);
+			int case_center_y = (int)(m_boardDraw.top + (t.size() - 1 + 0.5) * m_caseHeight);
+			pDC->Ellipse(case_center_x - m_circleRadius, case_center_y - m_circleRadius, case_center_x + m_circleRadius, case_center_y + m_circleRadius);
+			t.erase(t.begin());
+			pDC->SelectObject(&oldPen);
+			pDC->SelectObject(&oldBrush);
+			
+			ReleaseDC(pDC);
+		}
 	}
 }

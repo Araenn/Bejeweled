@@ -46,7 +46,12 @@ protected:
 
 public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-	void fallingAllJewels(CBejeweledDoc* pDoc);
+	void fallingAllJewels();
+	int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	void StartAnimation();
+	void StopAnimation();
+	void drawDefault();
+	void drawFallingJewels();
 
 	int m_widthBoardDraw; // largeur en pixel du plateau de jeu
 	int m_heightBoardDraw; // hauteur en pixel du plateau de jeu
@@ -57,6 +62,12 @@ public:
 	CRect m_boardDraw;
 	int m_firstClickX;
 	int m_firstClickY;
+	// Set a flag to indicate the animation is running
+	bool m_bAnimating;
+	// Store the current step of the animation
+	int m_nAnimStep;
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	vector<vector<int>> comboJewels;
 };
 
 #ifndef _DEBUG  // version Debug dans BejeweledView.cpp

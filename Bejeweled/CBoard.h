@@ -48,6 +48,7 @@ public:
 	CJewels shuffleJewels();
 	void intervertJewels(int i, int j, int x, int y);
 	vector<CJewels>& operator[](int index);
+	CJewels& get(int line, int col);
 	BOOL isAdjacent(int x1, int y1, int x2, int y2);
 	BOOL isSameJewels(CJewels j1, CJewels j2);
 	BOOL isCombo(int x, int y);
@@ -61,7 +62,9 @@ public:
 	vector<vector<int>> getAllComboJewels();
 	void addJewels(std::vector<std::vector<CJewels>>& T);
 	void CBoard::fallOneTime(std::vector<std::vector<CJewels>>& T);
+	BOOL isJewelsDefault(CJewels j);
 
+	std::vector<std::vector<CJewels>> T;
 };
 
 

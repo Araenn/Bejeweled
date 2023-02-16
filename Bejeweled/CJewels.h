@@ -25,6 +25,7 @@ constexpr COLORREF RED_FIRE RGB(150, 73, 1);
 constexpr COLORREF DARK_BLUE RGB(15, 5, 107);
 constexpr COLORREF GREEN_CYAN RGB(9, 189, 140);
 constexpr COLORREF BLACK RGB(0, 0, 0);
+constexpr COLORREF BROWN RGB(224, 169, 109);
 
 class CJewels
 {
@@ -35,8 +36,9 @@ private:
 public:
 	CJewels(CString m_name, COLORREF m_color);
 	~CJewels();
-	COLORREF getColorJewels() ;
+	COLORREF getColorJewels();
 	CString getNameJewels();
+	BOOL operator==(const CJewels &j) const;
 
 	static const CJewels DEFAULT;
 

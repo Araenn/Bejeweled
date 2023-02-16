@@ -248,6 +248,5 @@ void CBejeweledDoc::fallOneTime(std::vector<std::vector<CJewels>> &T) {
 
 		(*m_pBoard)[t.size() - 1][i] = t[0];
 		t.erase(t.begin());
-
 	}
 }

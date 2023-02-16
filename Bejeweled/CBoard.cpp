@@ -17,7 +17,7 @@ CBoard::CBoard() {
 		this->m_grid.push_back(line);
 	}
 	this->m_size_grid = size;
-	
+
 	deleteAllCombo();
 }
 
@@ -41,6 +41,7 @@ CBoard::CBoard(int size = 8, int stone = 6) {
 		this->m_grid.push_back(line);
 	}
 	this->m_size_grid = size;
+	this->T = makeFallingJewels();
 	deleteAllCombo();
 }
 
@@ -369,6 +370,7 @@ std::vector<std::vector<CJewels>> CBoard::makeFallingJewels() {
 		}
 		T.push_back(t);
 	}
+	this->T = T;
 	return T;
 }
 
@@ -387,7 +389,7 @@ void CBoard::addJewels(std::vector<std::vector<CJewels>>& T) {
 
 void CBoard::fallOneTime(std::vector<std::vector<CJewels>>& T) {
 	for (int i = 0; i < T.size(); i++) {
-		std::vector<CJewels> &t = T[i];
+		std::vector<CJewels> t = T[i];
 		if (t.size() == 0) {
 			continue;
 		}
@@ -395,4 +397,12 @@ void CBoard::fallOneTime(std::vector<std::vector<CJewels>>& T) {
 		this->m_grid[t.size() - 1][i] = t[0];
 		t.erase(t.begin());
 	}
+}
+
+BOOL CBoard::isJewelsDefault(CJewels j) {
+	return j == CJewels::DEFAULT;
+}
+
+CJewels& CBoard::get(int line, int col) {
+	return this->m_grid[line][col];
 }
