@@ -51,9 +51,7 @@ CBejeweledView::CBejeweledView() noexcept :
 	m_caseWidth(0),
 	m_circleRadius(0),
 	m_firstClickX(-1),
-	m_firstClickY(-1),
-	m_bAnimating(false),
-	m_nAnimStep(0)
+	m_firstClickY(-1)
 {
 	// TODO: ajoutez ici du code de construction
 }
@@ -63,15 +61,6 @@ CBejeweledView::~CBejeweledView()
 
 }
 
-int CBejeweledView::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if (CWnd::OnCreate(lpCreateStruct) == -1)
-		return -1;
-
-	// TODO:  Add your specialized creation code here
-
-	return 0;
-}
 
 BOOL CBejeweledView::PreCreateWindow(CREATESTRUCT& cs)
 {
@@ -172,14 +161,11 @@ void CBejeweledView::OnDraw(CDC* pDC)
 
 void CBejeweledView::StartAnimation()
 {
-	m_bAnimating = true;
-	m_nAnimStep = 0;
 	SetTimer(1, 1000, NULL);
 }
 
 void CBejeweledView::StopAnimation()
 {
-	m_bAnimating = false;
 	KillTimer(1);
 }
 
@@ -285,10 +271,10 @@ void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
 	if (secondJewelX >= 0 && secondJewelX < pDoc->m_pBoard->getBoardSize() &&
 		secondJewelY >= 0 && secondJewelY < pDoc->m_pBoard->getBoardSize()) {
 
-		pDoc->invertJewels(firstJewelX, firstJewelY, secondJewelX, secondJewelY);
+		pDoc->m_pBoard->intervertJewels(firstJewelX, firstJewelY, secondJewelX, secondJewelY);
 
 		if (!pDoc->m_pBoard->isMoveLegal(firstJewelX, firstJewelY, secondJewelX, secondJewelY)) {
-			pDoc->invertJewels(firstJewelX, firstJewelY, secondJewelX, secondJewelY);
+			pDoc->m_pBoard->intervertJewels(firstJewelX, firstJewelY, secondJewelX, secondJewelY);
 			m_firstClickX = -1;
 			m_firstClickY = -1;
 			return;
@@ -297,9 +283,6 @@ void CBejeweledView::OnLButtonDown(UINT nFlags, CPoint point)
 
 		comboJewels = pDoc->m_pBoard->getComboJewelsOnSwap(firstJewelX, firstJewelY, secondJewelX, secondJewelY);
 		StartAnimation();
-		
-
-		get_log_file() << "score: " << pDoc->getScore() << std::endl;
 
 		m_firstClickX = -1;
 		m_firstClickY = -1;
@@ -343,9 +326,7 @@ void CBejeweledView::OnTimer(UINT_PTR nIDEvent)
 		return;
 	CDC* pDC = GetDC();
 		
-	//dessiner en couleur fond ceux qui sortent directement de makeJewelsFalling, puis dessiner avec cette fonction en faisant descendre PROGRESSIVEMENT les pierres
 	pDoc->m_pBoard->disappearingJewels(comboJewels);
-	//drawDefault();
 	pDoc->m_pBoard->applyGravity();
 	drawFallingJewels();
 	pDoc->updateView();
@@ -355,9 +336,7 @@ void CBejeweledView::OnTimer(UINT_PTR nIDEvent)
 	comboJewels = pDoc->m_pBoard->getAllComboJewels();
 	while (comboJewels.size() != 0) {
 		pDoc->addScore(comboJewels.size() * comboJewels.size());
-
 		pDoc->m_pBoard->disappearingJewels(comboJewels);
-		//drawDefault();
 		pDoc->m_pBoard->applyGravity();
 		drawFallingJewels();
 		fallingAllJewels();
@@ -365,42 +344,6 @@ void CBejeweledView::OnTimer(UINT_PTR nIDEvent)
 	}
 	CView::OnTimer(nIDEvent);
 }
-
-/*
-* draw the jewels which were in combo, so the disappeared one
-* draw them in the color of the board game
-*
-*/
-
-void CBejeweledView::drawDefault() {
-	CBejeweledDoc* pDoc = GetDocument();
-	ASSERT_VALID(pDoc);
-	if (!pDoc)
-		return;
-	CDC* pDC = GetDC();
-
-	for (int line = 0; line < pDoc->m_tailleTab; line++) {
-		for (int col = 0; col < pDoc->m_tailleTab; col++) {
-			const CJewels& test = pDoc->m_pBoard->get(line, col);
-			if (pDoc->m_pBoard->isJewelsDefault(test)) {
-				CPen defaultPen(PS_SOLID, 1, BROWN);
-				CPen *oldPen = pDC->SelectObject(&defaultPen);
-				CBrush defaultBrush(BROWN);
-				CBrush *oldBrush = pDC->SelectObject(&defaultBrush);
-
-				int case_center_x = (int)(m_boardDraw.left + (col + 0.5) * m_caseWidth);
-				int case_center_y = (int)(m_boardDraw.top + (line + 0.5) * m_caseHeight);
-				pDC->Ellipse(case_center_x - m_circleRadius, case_center_y - m_circleRadius, case_center_x + m_circleRadius, case_center_y + m_circleRadius);
-
-				pDC->SelectObject(&oldPen);
-				pDC->SelectObject(&oldBrush);
-				ReleaseDC(pDC);
-			}
-		}
-	}
-	
-}
-
 
 /*
 * draw the jewels that are falling in the board (aka the new one)

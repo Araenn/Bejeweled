@@ -26,8 +26,8 @@
 IMPLEMENT_DYNCREATE(CBejeweledDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CBejeweledDoc, CDocument)
-	ON_COMMAND(ID_TEST_AFFICHAGEGRID, &CBejeweledDoc::OnTestAffichagegrid)
-	ON_COMMAND(ID_TEST_DESSINBOARD, &CBejeweledDoc::OnTestDessinboard)
+	ON_COMMAND(ID_TEST_AFFICHAGEGRID, &CBejeweledDoc::OnDebug)
+	ON_COMMAND(ID_TEST_DESSINBOARD, &CBejeweledDoc::OnStart)
 	ON_COMMAND(ID_OPTIONS_TAILLEDUPLATEAU, &CBejeweledDoc::OnOptionsTailleduplateau)
 	ON_COMMAND(ID_OPTIONS_NOMBREDEPIERRES, &CBejeweledDoc::OnOptionsNombredepierres)
 END_MESSAGE_MAP()
@@ -39,8 +39,6 @@ CBejeweledDoc::CBejeweledDoc() noexcept :
 	p_valueTab(NULL),
 	m_tailleTab(8),
 	m_stoneNumber(6),
-	m_widthCase(0),
-	m_heightCase(0),
 	flag(0),
 	score(0)
 {
@@ -156,7 +154,7 @@ void CBejeweledDoc::Dump(CDumpContext& dc) const
 // commandes de CBejeweledDoc
 
 
-void CBejeweledDoc::OnTestAffichagegrid()
+void CBejeweledDoc::OnDebug()
 {
 	this->flag = 1;
 
@@ -177,7 +175,7 @@ int CBejeweledDoc::getTaille() const {
 	return this->m_tailleTab;
 }
 
-void CBejeweledDoc::OnTestDessinboard()
+void CBejeweledDoc::OnStart()
 {
 	this->flag = 2;
 	delete m_pBoard;
@@ -196,7 +194,7 @@ void CBejeweledDoc::OnOptionsTailleduplateau()
 	dlg.DoModal();
 	m_tailleTab = (int) dlg.m_sliderValue;
 	this->score = 0;
-	OnTestDessinboard();
+	OnStart();
 }
 
 
@@ -207,15 +205,9 @@ void CBejeweledDoc::OnOptionsNombredepierres()
 	dlg.DoModal();
 	m_stoneNumber = dlg.m_sliderStoneNumber;
 	this->score = 0;
-	OnTestDessinboard();
+	OnStart();
 }
 
-/*
-* swap jewels 1 with jewels 2 according to their coordinates x, y
-*/
-void CBejeweledDoc::invertJewels(int x1, int y1, int x2, int y2) {
-	m_pBoard->intervertJewels(x1, y1, x2, y2);
-}
 
 void CBejeweledDoc::updateView() {
 	updateBoard();

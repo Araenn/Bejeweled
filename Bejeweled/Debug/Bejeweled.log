@@ -1,11 +1,4 @@
-﻿  Bejeweled.cpp
-  BejeweledDoc.cpp
-  BejeweledView.cpp
-C:\Users\leaye\Documents\Lea\Etudes\SeaTech\2A\S1\IHM\Projet\Bejeweled\Bejeweled\BejeweledView.cpp(418,21): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\leaye\Documents\Lea\Etudes\SeaTech\2A\S1\IHM\Projet\Bejeweled\Bejeweled\BejeweledView.cpp(430,22): warning C4018: '<' : incompatibilité signed/unsigned
-  CBoard.cpp
-C:\Users\leaye\Documents\Lea\Etudes\SeaTech\2A\S1\IHM\Projet\Bejeweled\Bejeweled\CBoard.cpp(102,32): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\leaye\Documents\Lea\Etudes\SeaTech\2A\S1\IHM\Projet\Bejeweled\Bejeweled\CBoard.cpp(334,20): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\leaye\Documents\Lea\Etudes\SeaTech\2A\S1\IHM\Projet\Bejeweled\Bejeweled\CBoard.cpp(398,20): warning C4018: '<' : incompatibilité signed/unsigned
-  Génération de code en cours...
+﻿  BejeweledView.cpp
+C:\Users\leaye\Documents\Lea\Etudes\SeaTech\2A\S1\IHM\Projet\Bejeweled\Bejeweled\BejeweledView.cpp(361,21): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\leaye\Documents\Lea\Etudes\SeaTech\2A\S1\IHM\Projet\Bejeweled\Bejeweled\BejeweledView.cpp(373,22): warning C4018: '<' : incompatibilité signed/unsigned
   Bejeweled.vcxproj -> C:\Users\leaye\Documents\Lea\Etudes\SeaTech\2A\S1\IHM\Projet\Bejeweled\Debug\Bejeweled.exe

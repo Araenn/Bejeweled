@@ -1,8 +1,0 @@
-score: 0
-score: 170
-score: 179
-score: 188
-score: 197
-score: 206
-score: 224
-score: 240
