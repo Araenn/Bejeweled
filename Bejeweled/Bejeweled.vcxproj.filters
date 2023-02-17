@@ -117,6 +117,54 @@
     <Image Include="res\Toolbar256.bmp">
       <Filter>Fichiers de ressources</Filter>
     </Image>
+    <Image Include="Images\aqua.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\crystal.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\diamond.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\emerald.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\kunzite.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\opale.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\phoenix.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\ruby.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\sandstone.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\sanguine.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\sapphire.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\sunstone.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\topaze.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\tourmaline.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\turquoise.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="Images\default.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Bejeweled.rc2">

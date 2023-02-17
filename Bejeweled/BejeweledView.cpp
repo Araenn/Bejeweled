@@ -69,7 +69,6 @@ int CBejeweledView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	// TODO:  Add your specialized creation code here
-	SetTimer(1, 50, NULL);
 
 	return 0;
 }
@@ -329,7 +328,7 @@ void CBejeweledView::fallingAllJewels() {
 	}
 
 	for (unsigned int i = 0; i < maxDepth; i++) {
-		pDoc->fallOneTime(T);
+		pDoc->m_pBoard->fallOneTime(T);
 		StartAnimation();
 	}
 }

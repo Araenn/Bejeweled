@@ -165,7 +165,7 @@ void CBejeweledDoc::OnTestAffichagegrid()
 	}
 
 	if (p_valueTab != NULL) delete[] p_valueTab;
-	p_valueTab = m_pBoard->debug_board();
+	p_valueTab = m_pBoard->debugBoard();
 	UpdateAllViews(0);
 }
 
@@ -240,16 +240,4 @@ int CBejeweledDoc::getScore() {
 
 void CBejeweledDoc::addScore(int score) {
 	this->score += score;
-}
-
-void CBejeweledDoc::fallOneTime(std::vector<std::vector<CJewels>> &T) {
-	for (int i = 0; i < T.size(); i++) {
-		std::vector<CJewels> &t = T[i];
-		if (t.size() == 0) {
-			continue;
-		}
-
-		(*m_pBoard)[t.size() - 1][i] = t[0];
-		t.erase(t.begin());
-	}
 }

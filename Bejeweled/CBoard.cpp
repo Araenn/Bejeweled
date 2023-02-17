@@ -50,6 +50,13 @@ vector<CJewels>& CBoard::operator[](int index) {
 }
 
 /**
+retourne le jewel a l'emplacement line,col du board
+*/
+CJewels& CBoard::get(int line, int col) {
+	return this->m_grid[line][col];
+}
+
+/**
 	Supprime tous les combo existant du plateau
 */
 void CBoard::deleteAllCombo() {//check ici
@@ -69,7 +76,7 @@ int CBoard::getBoardSize() {
 	return this->m_size_grid;
 }
 
-CString* CBoard::debug_board() {
+CString* CBoard::debugBoard() {
 	int m_tailleTab = getBoardSize();
 	CString temp;
 
@@ -403,6 +410,3 @@ BOOL CBoard::isJewelsDefault(CJewels j) {
 	return j == CJewels::DEFAULT;
 }
 
-CJewels& CBoard::get(int line, int col) {
-	return this->m_grid[line][col];
-}

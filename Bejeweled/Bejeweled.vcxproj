@@ -221,6 +221,22 @@
     <ResourceCompile Include="Bejeweled.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Images\aqua.bmp" />
+    <Image Include="Images\crystal.bmp" />
+    <Image Include="Images\default.bmp" />
+    <Image Include="Images\diamond.bmp" />
+    <Image Include="Images\emerald.bmp" />
+    <Image Include="Images\kunzite.bmp" />
+    <Image Include="Images\opale.bmp" />
+    <Image Include="Images\phoenix.bmp" />
+    <Image Include="Images\ruby.bmp" />
+    <Image Include="Images\sandstone.bmp" />
+    <Image Include="Images\sanguine.bmp" />
+    <Image Include="Images\sapphire.bmp" />
+    <Image Include="Images\sunstone.bmp" />
+    <Image Include="Images\topaze.bmp" />
+    <Image Include="Images\tourmaline.bmp" />
+    <Image Include="Images\turquoise.bmp" />
     <Image Include="res\Bejeweled.ico" />
     <Image Include="res\BejeweledDoc.ico" />
     <Image Include="res\Toolbar.bmp" />

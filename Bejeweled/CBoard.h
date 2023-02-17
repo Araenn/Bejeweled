@@ -42,27 +42,32 @@ private:
 public:
 	CBoard();
 	CBoard(int size, int stone);
-	CString * debug_board();
 	int getBoardSize();
-	void deleteAllCombo();
+	CJewels& get(int line, int col);
+
+	CString* debugBoard();
+
 	CJewels shuffleJewels();
 	void intervertJewels(int i, int j, int x, int y);
 	vector<CJewels>& operator[](int index);
-	CJewels& get(int line, int col);
-	BOOL isAdjacent(int x1, int y1, int x2, int y2);
-	BOOL isSameJewels(CJewels j1, CJewels j2);
-	BOOL isCombo(int x, int y);
-	vector<vector<int>> getComboJewels(int x, int y, vector<vector<int>>& flagMap);
-	BOOL isMoveLegal(int x1, int y1, int x2, int y2);
-	void disappearingJewels(vector<vector<int>>& jewelsCoords);
-	vector<vector<int>> getComboJewelsOnSwap(int x1, int y1, int x2, int y2);
-	void applyGravity();
-	void applyGravityOnCol(int col);
-	std::vector<std::vector<CJewels>> CBoard::makeFallingJewels();
-	vector<vector<int>> getAllComboJewels();
-	void addJewels(std::vector<std::vector<CJewels>>& T);
-	void CBoard::fallOneTime(std::vector<std::vector<CJewels>>& T);
+
 	BOOL isJewelsDefault(CJewels j);
+	BOOL isAdjacent(int x1, int y1, int x2, int y2);
+	BOOL isCombo(int x, int y);
+	BOOL isMoveLegal(int x1, int y1, int x2, int y2);
+	BOOL isSameJewels(CJewels j1, CJewels j2);
+
+	vector<vector<int>> getComboJewels(int x, int y, vector<vector<int>>& flagMap);
+	vector<vector<int>> getComboJewelsOnSwap(int x1, int y1, int x2, int y2);
+	vector<vector<int>> getAllComboJewels();
+
+	void deleteAllCombo();
+	void disappearingJewels(vector<vector<int>>& jewelsCoords);
+	void applyGravityOnCol(int col);
+	void applyGravity();
+	std::vector<std::vector<CJewels>> makeFallingJewels();
+	void CBoard::fallOneTime(std::vector<std::vector<CJewels>>& T);
+	void addJewels(std::vector<std::vector<CJewels>>& T);
 
 	std::vector<std::vector<CJewels>> T;
 };

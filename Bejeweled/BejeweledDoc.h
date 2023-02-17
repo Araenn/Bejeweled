@@ -70,5 +70,4 @@ public:
 	void updateView();
 	int getScore();
 	void addScore(int score);
-	void fallOneTime(std::vector<std::vector<CJewels>> &T);
 };
