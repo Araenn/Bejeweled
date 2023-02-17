@@ -124,6 +124,7 @@ void CBejeweledView::OnDraw(CDC* pDC)
 				pDoc->getChaine()[i],
 				pDoc->getChaine()[i].GetLength()
 			);
+
 		}
 	}
 	else if (pDoc->flag == 2) {
@@ -151,7 +152,16 @@ void CBejeweledView::OnDraw(CDC* pDC)
 		drawFallingJewels();
 		StartAnimation();
 
-
+		//affichage du score
+		CString temp;
+		temp.Format(_T("%2i"), pDoc->getScore());
+		temp = _T("Score : ") + temp;
+		pDC->TextOut(
+			(m_boardDraw.Width() / 2),
+			(m_boardDraw.Height() / 2 + 20),
+			temp,
+			temp.GetLength()
+		);
 
 		pDC->SelectObject(&oldBrush);
 		pDC->SelectObject(&oldPen);
@@ -336,7 +346,7 @@ void CBejeweledView::OnTimer(UINT_PTR nIDEvent)
 		
 	//dessiner en couleur fond ceux qui sortent directement de makeJewelsFalling, puis dessiner avec cette fonction en faisant descendre PROGRESSIVEMENT les pierres
 	pDoc->m_pBoard->disappearingJewels(comboJewels);
-	drawDefault();
+	//drawDefault();
 	pDoc->m_pBoard->applyGravity();
 	drawFallingJewels();
 	pDoc->updateView();
@@ -348,7 +358,7 @@ void CBejeweledView::OnTimer(UINT_PTR nIDEvent)
 		pDoc->addScore(comboJewels.size() * comboJewels.size());
 
 		pDoc->m_pBoard->disappearingJewels(comboJewels);
-		drawDefault();
+		//drawDefault();
 		pDoc->m_pBoard->applyGravity();
 		drawFallingJewels();
 		fallingAllJewels();
@@ -356,6 +366,12 @@ void CBejeweledView::OnTimer(UINT_PTR nIDEvent)
 	}
 	CView::OnTimer(nIDEvent);
 }
+
+/*
+* draw the jewels which were in combo, so the disappeared one
+* draw them in the color of the board game
+*
+*/
 
 void CBejeweledView::drawDefault() {
 	CBejeweledDoc* pDoc = GetDocument();
@@ -386,6 +402,11 @@ void CBejeweledView::drawDefault() {
 	
 }
 
+
+/*
+* draw the jewels that are falling in the board (aka the new one)
+*
+*/
 void CBejeweledView::drawFallingJewels() {
 	CBejeweledDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
@@ -398,7 +419,6 @@ void CBejeweledView::drawFallingJewels() {
 		for (int i = 0; i < T.size(); i++) {
 			std::vector<CJewels>& t = T[i];
 
-			get_log_file() << "T(i) = " << T[i].size() << std::endl;
 			if (t.size() == 0) {
 				continue;
 			}
@@ -408,10 +428,12 @@ void CBejeweledView::drawFallingJewels() {
 			CBrush newBrush(t[0].getColorJewels());
 			CBrush* oldBrush = pDC->SelectObject(&newBrush);
 
-			int case_center_x = (int)(m_boardDraw.left + (i + 0.5) * m_caseWidth);
-			int case_center_y = (int)(m_boardDraw.top + (t.size() - 1 + 0.5) * m_caseHeight);
-			pDC->Ellipse(case_center_x - m_circleRadius, case_center_y - m_circleRadius, case_center_x + m_circleRadius, case_center_y + m_circleRadius);
-			t.erase(t.begin());
+			for (int j = 0; j < t.size(); j++) {
+				int case_center_x = (int)(m_boardDraw.left + (i + 0.5) * m_caseWidth);
+				int case_center_y = (int)(m_boardDraw.top + (t.size() - 1 + 0.5 + j) * m_caseHeight);
+				pDC->Ellipse(case_center_x - m_circleRadius, case_center_y - m_circleRadius, case_center_x + m_circleRadius, case_center_y + m_circleRadius);
+				t.erase(t.begin());
+			}
 			pDC->SelectObject(&oldPen);
 			pDC->SelectObject(&oldBrush);
 			

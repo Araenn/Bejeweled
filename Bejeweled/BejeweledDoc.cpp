@@ -182,6 +182,7 @@ void CBejeweledDoc::OnTestDessinboard()
 	this->flag = 2;
 	delete m_pBoard;
 	m_pBoard = new CBoard(m_tailleTab, m_stoneNumber);
+	this->score = 0;
 	updateBoard();
 	UpdateAllViews(0);
 
@@ -194,6 +195,7 @@ void CBejeweledDoc::OnOptionsTailleduplateau()
 	CDlgSizeBoard dlg;
 	dlg.DoModal();
 	m_tailleTab = (int) dlg.m_sliderValue;
+	this->score = 0;
 	OnTestDessinboard();
 }
 
@@ -204,6 +206,7 @@ void CBejeweledDoc::OnOptionsNombredepierres()
 	CDlgStoneNumber dlg;
 	dlg.DoModal();
 	m_stoneNumber = dlg.m_sliderStoneNumber;
+	this->score = 0;
 	OnTestDessinboard();
 }
 
